@@ -1,2 +1,2 @@
 # StatService
-Statistic Service API Repo
+Statistic Microservice API Repo

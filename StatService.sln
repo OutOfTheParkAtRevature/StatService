@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatService", "StatService\StatService.csproj", "{EAE21956-5E9B-49BC-97A1-08D0A004145E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{A9D62091-D44C-48BB-ADA4-7435740D4D28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Logic\Service.csproj", "{A9D62091-D44C-48BB-ADA4-7435740D4D28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{E8F0BFC2-E498-4F6E-B80F-56DC3CD874C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{E8F0BFC2-E498-4F6E-B80F-56DC3CD874C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repo", "Repo\Repo.csproj", "{D2C552D7-0242-4009-A0F9-F7E24D5BBD91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repo\Repository.csproj", "{D2C552D7-0242-4009-A0F9-F7E24D5BBD91}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Tests", "Logic.Tests\Logic.Tests.csproj", "{AE91DFEB-D66C-4B8B-8CEE-67F65BA8F790}"
 EndProject

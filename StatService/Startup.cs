@@ -2,11 +2,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Repopository;
+using Repository;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +20,11 @@ namespace StatService
 {
     public class Startup
     {
+        public IConfiguration _configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -26,8 +32,12 @@ namespace StatService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddScoped<StatsContext>();
+            services.AddScoped<Logic>();
+            services.AddScoped<Repo>();
             services.AddControllers();
+            services.AddDbContext<StatsContext>(options =>
+                options.UseSqlServer(_configuration.GetConnectionString("LocalDB")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StatService", Version = "v1" });

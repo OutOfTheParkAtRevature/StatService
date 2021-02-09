@@ -6,87 +6,87 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Repository;
 
-namespace Repopository
+namespace Repository
 {
     public class Repo
     {
-        private readonly StatsContext _StatsContext;
+        private readonly StatsContext _statsContext;
         private readonly ILogger _logger;
-        public DbSet<BaseballStatistic> baseballStatistics;
-        public DbSet<BasketballStatistic> basketballStatistics;
-        public DbSet<FootBallStatistic> footBallStatistics;
-        public DbSet<GolfStatistic> golfStatistics;
-        public DbSet<HockeyStatistic> hockeyStatistics;
-        public DbSet<SoccerStatistic> soccerStatistics;
+        public DbSet<BaseballStatistic> BaseballStatistics;
+        public DbSet<BasketballStatistic> BasketballStatistics;
+        public DbSet<FootBallStatistic> FootballStatistics;
+        public DbSet<GolfStatistic> GolfStatistics;
+        public DbSet<HockeyStatistic> HockeyStatistics;
+        public DbSet<SoccerStatistic> SoccerStatistics;
 
         public Repo(StatsContext teamContext, ILogger<Repo> logger)
         {
-            _StatsContext = teamContext;
+            _statsContext = teamContext;
             _logger = logger;
-            this.baseballStatistics = _StatsContext.baseballStatistics;
-            this.basketballStatistics = _StatsContext.basketballStatistics;
-            this.footBallStatistics = _StatsContext.footBallStatistics;
-            this.golfStatistics = _StatsContext.golfStatistics;
-            this.hockeyStatistics = _StatsContext.hockeyStatistics;
-            this.soccerStatistics = _StatsContext.soccerStatistics;
+            this.BaseballStatistics = _statsContext.BaseballStatistics;
+            this.BasketballStatistics = _statsContext.BasketballStatistics;
+            this.FootballStatistics = _statsContext.FootballStatistics;
+            this.GolfStatistics = _statsContext.GolfStatistics;
+            this.HockeyStatistics = _statsContext.HockeyStatistics;
+            this.SoccerStatistics = _statsContext.SoccerStatistics;
         }
 
         public async Task CommitSave()
         {
-            await _StatsContext.SaveChangesAsync();
+            await _statsContext.SaveChangesAsync();
         }
 
         public async Task<BaseballStatistic> GetBaseballStatisticsById(int id)
         {
-            return await baseballStatistics.FindAsync(id);
+            return await BaseballStatistics.FindAsync(id);
         }
         public async Task<IEnumerable<BaseballStatistic>> GetBaseballStatistics()
         {
-            return await baseballStatistics.ToListAsync();
+            return await BaseballStatistics.ToListAsync();
         }
 
 
         public async Task<BasketballStatistic> GetBasketballStatisticsById(int id)
         {
-            return await basketballStatistics.FindAsync(id);
+            return await BasketballStatistics.FindAsync(id);
         }
         public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatistic()
         {
-            return await basketballStatistics.ToListAsync();
+            return await BasketballStatistics.ToListAsync();
         }
 
         public async Task<FootBallStatistic> GetFootBallStatisticsById(int id)
         {
-            return await footBallStatistics.FindAsync(id);
+            return await FootballStatistics.FindAsync(id);
         }
         public async Task<IEnumerable<FootBallStatistic>> GetFootBallStatistic()
         {
-            return await footBallStatistics.ToListAsync();
+            return await FootballStatistics.ToListAsync();
         }
         public async Task<GolfStatistic> GetGolfStatisticsById(int id)
         {
-            return await golfStatistics.FindAsync(id);
+            return await GolfStatistics.FindAsync(id);
         }
         public async Task<IEnumerable<GolfStatistic>> GetGolfStatistic()
         {
-            return await golfStatistics.ToListAsync();
+            return await GolfStatistics.ToListAsync();
         }
         public async Task<HockeyStatistic> GetHockeyStatisticsById(int id)
         {
-            return await hockeyStatistics.FindAsync(id);
+            return await HockeyStatistics.FindAsync(id);
         }
         public async Task<IEnumerable<HockeyStatistic>> GetHockeyStatistic()
         {
-            return await hockeyStatistics.ToListAsync();
+            return await HockeyStatistics.ToListAsync();
         }
 
         public async Task<SoccerStatistic> GetSoccerStatisticsById(int id)
         {
-            return await soccerStatistics.FindAsync(id);
+            return await SoccerStatistics.FindAsync(id);
         }
         public async Task<IEnumerable<SoccerStatistic>> GetSoccerStatistic()
         {
-            return await soccerStatistics.ToListAsync();
+            return await SoccerStatistics.ToListAsync();
         }
     }
 }

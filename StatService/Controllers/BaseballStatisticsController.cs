@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Models;
+using Repository;
+
+namespace StatService.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BaseballStatisticsController : ControllerBase
+    {
+        private readonly StatsContext _context;
+
+        public BaseballStatisticsController(StatsContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/BaseballStatistics
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BaseballStatistic>>> GetBaseballStatistics()
+        {
+            return await _context.BaseballStatistics.ToListAsync();
+        }
+
+        // GET: api/BaseballStatistics/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BaseballStatistic>> GetBaseballStatistic(Guid id)
+        {
+            var baseballStatistic = await _context.BaseballStatistics.FindAsync(id);
+
+            if (baseballStatistic == null)
+            {
+                return NotFound();
+            }
+
+            return baseballStatistic;
+        }
+
+        // PUT: api/BaseballStatistics/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBaseballStatistic(Guid id, BaseballStatistic baseballStatistic)
+        {
+            if (id != baseballStatistic.StatLineID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(baseballStatistic).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BaseballStatisticExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/BaseballStatistics
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<BaseballStatistic>> PostBaseballStatistic(BaseballStatistic baseballStatistic)
+        {
+            _context.BaseballStatistics.Add(baseballStatistic);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetBaseballStatistic", new { id = baseballStatistic.StatLineID }, baseballStatistic);
+        }
+
+        // DELETE: api/BaseballStatistics/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBaseballStatistic(Guid id)
+        {
+            var baseballStatistic = await _context.BaseballStatistics.FindAsync(id);
+            if (baseballStatistic == null)
+            {
+                return NotFound();
+            }
+
+            _context.BaseballStatistics.Remove(baseballStatistic);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool BaseballStatisticExists(Guid id)
+        {
+            return _context.BaseballStatistics.Any(e => e.StatLineID == id);
+        }
+    }
+}

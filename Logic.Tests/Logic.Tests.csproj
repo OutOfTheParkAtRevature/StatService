@@ -19,11 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
-<<<<<<< HEAD
-=======
   <ItemGroup>
     <ProjectReference Include="..\Logic\Service.csproj" />
   </ItemGroup>
->>>>>>> staging
+
 
 </Project>

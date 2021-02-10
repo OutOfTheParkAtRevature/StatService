@@ -19,7 +19,7 @@ namespace Models
         [DisplayName("Free Throws")]
         public int FThrows { get; set; }
         public int Rebounds { get; set; }
-        public int Assissts { get; set; }
+        public int Assists { get; set; }
         public int Steals { get; set; }
         public int Turnovers { get; set; }
         public int Fouls { get; set; }

@@ -88,5 +88,48 @@ namespace Repository
         {
             return await SoccerStatistics.ToListAsync();
         }
+
+        // UpdateStatistic
+        // Potential to do this with object parameter and switch casing which statistic type to return
+        // Would have to convert object to specific model via mapper.
+        // Pros: Condensed to one function
+        // Cons: Increased complexity, error prone, might require a generic statistic model
+        // Much easier to just overload function -- probably easier to read as well
+        // Not even sure why I took the ten minutes to consider this option. 
+        public async Task<BaseballStatistic> UpdateStatistic(BaseballStatistic baseballStatistic, int id)
+        {
+            BaseballStatistics.Update(baseballStatistic);
+            return await BaseballStatistics.FindAsync(id);
+        }
+
+        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic, int id)
+        {
+            BasketballStatistics.Update(basketballStatistic);
+            return await BasketballStatistics.FindAsync(id);
+        }
+
+        public async Task<FootBallStatistic> UpdateStatistic(FootBallStatistic footballStatistic, int id)
+        {
+            FootballStatistics.Update(footballStatistic);
+            return await FootballStatistics.FindAsync(id);
+        }
+
+        public async Task<GolfStatistic> UpdateStatistic(GolfStatistic golfStatistic, int id)
+        {
+            GolfStatistics.Update(golfStatistic);
+            return await GolfStatistics.FindAsync(id);
+        }
+
+        public async Task<HockeyStatistic> UpdateStatistic(HockeyStatistic hockeyStatistic, int id)
+        {
+            HockeyStatistics.Update(hockeyStatistic);
+            return await HockeyStatistics.FindAsync(id);
+        }
+
+        public async Task<SoccerStatistic> UpdateStatistic(SoccerStatistic soccerStatistic, int id)
+        {
+            SoccerStatistics.Update(soccerStatistic);
+            return await SoccerStatistics.FindAsync(id);
+        }
     }
 }

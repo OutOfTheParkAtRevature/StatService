@@ -24,7 +24,7 @@ namespace Repository
         {
             if (!options.IsConfigured)
             {
-                options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AppStore;Trusted_Connection = True;");
+               options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=LeagueDB;Trusted_Connection = True;");
             }
 
         }

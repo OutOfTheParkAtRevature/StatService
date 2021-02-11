@@ -76,22 +76,29 @@ namespace Repository
             return await BasketballStatistics.ToListAsync();
         }
 
-        /*
+        
         public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatisticByPlayerId(Guid id)
         {
             // some generic bull
             List<BasketballStatistic> basketballStatisticList = new List<BasketballStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
             // get all stat line ids where player id matches
-            IEnumerable<Guid> statLineIdList = await PlayerGames.Where(x=>x.UserID == id);
+            IEnumerable<PlayerGame> playerGameEnumerable = PlayerGames.Where(x=>x.UserID == id);
+            // grab stat lines from player games
+            foreach (PlayerGame p in playerGameEnumerable)
+            {
+                statLineIdList.Add(p.StatLineID);
+            }
             // grab basketball stats using that list
             foreach(Guid s in statLineIdList)
             {
-                
+                // add stats where stat line id matches
+                basketballStatisticList.Add(await BasketballStatistics.SingleOrDefaultAsync(x=>x.StatLineID == s));
             }
-            return await BasketballStatistics.Where(x=>x.st).ToList();
-            // add all stat lines to a basketball statistics list
+            // return that list
+            return basketballStatisticList;
         }
-        */
+        
 
         // UpdateStatistic
         /// <summary>

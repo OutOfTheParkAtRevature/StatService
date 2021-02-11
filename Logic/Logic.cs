@@ -54,7 +54,7 @@ namespace Service
             return await _repo.GetBasketballStatisticsById(id);
         }
 
-        /*
+        
         /// <summary>
         /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns stats from that game.
         /// </summary>
@@ -63,10 +63,9 @@ namespace Service
         public async Task<BasketballStatistic> GetGameStatistic(Guid userId, Guid gameId)
         {
             return await _repo.GetGameStatistic(userId, gameId);
-        }
-        */
+        }   
 
-        /*
+        
         /// <summary>
         /// Summarizes player statistics from the season.
         /// </summary>
@@ -92,7 +91,6 @@ namespace Service
             // return total
             return basketballStatistic;
         }
-        */
 
         // May be redundant to send id in since we can grab the id from the basketball statistic model
         /// <summary>
@@ -101,22 +99,22 @@ namespace Service
         /// <param name="b"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic/*, Guid id*/)
+        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic updatedBasketballStatistic/*, Guid id*/)
         {
             // Get player stat line id
-            BasketballStatistic updatedBasketballStatistic = await _repo.GetBasketballStatisticsById(basketballStatistic.StatLineID);
+            BasketballStatistic basketballStatistic = await _repo.GetBasketballStatisticsById(updatedBasketballStatistic.StatLineID);
 
             // Add new stats
-            updatedBasketballStatistic.Assists = basketballStatistic.Assists;
-            updatedBasketballStatistic.FGoals = basketballStatistic.FGoals;
-            updatedBasketballStatistic.Fouls = basketballStatistic.Fouls;
-            updatedBasketballStatistic.FThrows = basketballStatistic.FThrows;
-            updatedBasketballStatistic.Rebounds = basketballStatistic.Rebounds;
-            updatedBasketballStatistic.Steals = basketballStatistic.Steals;
-            updatedBasketballStatistic.Turnovers = basketballStatistic.Turnovers;
+            basketballStatistic.Assists = updatedBasketballStatistic.Assists;
+            basketballStatistic.FGoals = updatedBasketballStatistic.FGoals;
+            basketballStatistic.Fouls = updatedBasketballStatistic.Fouls;
+            basketballStatistic.FThrows = updatedBasketballStatistic.FThrows;
+            basketballStatistic.Rebounds = updatedBasketballStatistic.Rebounds;
+            basketballStatistic.Steals = updatedBasketballStatistic.Steals;
+            basketballStatistic.Turnovers = updatedBasketballStatistic.Turnovers;
 
             // Update statistics and return updated statistics
-            return await _repo.UpdateStatistic(updatedBasketballStatistic);
+            return await _repo.UpdateStatistic(basketballStatistic);
         }
 
         /// <summary>

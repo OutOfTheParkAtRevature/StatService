@@ -27,5 +27,6 @@ namespace Models
         public int TakeAWays { get; set; }
         [DisplayName("Give Aways")]
         public int GiveAways { get; set; }
+        //public int SportId { get; set; }
     }
 }

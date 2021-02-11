@@ -28,5 +28,6 @@ namespace Models
         [DisplayName("Sand Saves")]
         public int SandSaves { get; set; }
         public int Scrambles { get; set; }
+        //public int SportId { get; set; }
     }
 }

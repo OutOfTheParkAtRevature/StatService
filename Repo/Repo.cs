@@ -18,6 +18,8 @@ namespace Repository
         public DbSet<GolfStatistic> GolfStatistics;
         public DbSet<HockeyStatistic> HockeyStatistics;
         public DbSet<SoccerStatistic> SoccerStatistics;
+        public DbSet<PlayerGame> PlayerGames;
+        public DbSet<ApplicationUser> Users;
 
         public Repo(StatsContext teamContext, ILogger<Repo> logger)
         {
@@ -29,33 +31,93 @@ namespace Repository
             this.GolfStatistics = _statsContext.GolfStatistics;
             this.HockeyStatistics = _statsContext.HockeyStatistics;
             this.SoccerStatistics = _statsContext.SoccerStatistics;
+            this.PlayerGames = _statsContext.PlayerGames;
+            this.Users = _statsContext.Users;
         }
 
         public async Task CommitSave()
         {
             await _statsContext.SaveChangesAsync();
         }
+        
+        // CreateStatistic
+        public async Task<BasketballStatistic> CreateStatistic(BasketballStatistic bs)
+        {
+            await BasketballStatistics.AddAsync(bs);
+            await CommitSave();
+            return await GetBasketballStatisticsById(bs.StatLineID);
+        }
 
-        public async Task<BaseballStatistic> GetBaseballStatisticsById(int id)
+        // GetStatistic
+        public async Task<BasketballStatistic> GetBasketballStatisticsById(Guid id)
+        {
+            return await BasketballStatistics.FindAsync(id);
+        }
+
+        // TODO: Double check that Find does what is expected.
+        /// <summary>
+        /// Gets the specified player's statistics for a single game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetGameStatistic(Guid userId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = PlayerGames.Find(userId, gameId).StatLineID;
+            // Return stats for that game.
+            return await BasketballStatistics.FindAsync(statLineId);
+        }
+
+        /// <summary>
+        /// Gets all basketball statistics in the database.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatistic()
+        {
+            return await BasketballStatistics.ToListAsync();
+        }
+
+        // UpdateStatistic
+        /// <summary>
+        /// Updates basketball statistics with passed data.
+        /// </summary>
+        /// <param name="basketballStatistic"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic, Guid id)
+        {
+            BasketballStatistics.Update(basketballStatistic);
+            await CommitSave();
+            return await BasketballStatistics.FindAsync(id);
+        }
+
+        // DeleteStatistic
+        /// <summary>
+        /// Removes specific basketball statistic instance from database.
+        /// </summary>
+        /// <param name="basketballStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(BasketballStatistic basketballStatistic)
+        {
+            BasketballStatistics.Remove(basketballStatistic);
+            await CommitSave();
+        }
+
+
+        /*
+        public async Task<BaseballStatistic> GetBaseballStatisticsById(Guid id)
         {
             return await BaseballStatistics.FindAsync(id);
         }
+
         public async Task<IEnumerable<BaseballStatistic>> GetBaseballStatistics()
         {
             return await BaseballStatistics.ToListAsync();
         }
 
 
-        public async Task<BasketballStatistic> GetBasketballStatisticsById(int id)
-        {
-            return await BasketballStatistics.FindAsync(id);
-        }
-        public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatistic()
-        {
-            return await BasketballStatistics.ToListAsync();
-        }
-
-        public async Task<FootBallStatistic> GetFootBallStatisticsById(int id)
+        public async Task<FootBallStatistic> GetFootBallStatisticsById(Guid id)
         {
             return await FootballStatistics.FindAsync(id);
         }
@@ -63,7 +125,8 @@ namespace Repository
         {
             return await FootballStatistics.ToListAsync();
         }
-        public async Task<GolfStatistic> GetGolfStatisticsById(int id)
+
+        public async Task<GolfStatistic> GetGolfStatisticsById(Guid id)
         {
             return await GolfStatistics.FindAsync(id);
         }
@@ -71,7 +134,7 @@ namespace Repository
         {
             return await GolfStatistics.ToListAsync();
         }
-        public async Task<HockeyStatistic> GetHockeyStatisticsById(int id)
+        public async Task<HockeyStatistic> GetHockeyStatisticsById(Guid id)
         {
             return await HockeyStatistics.FindAsync(id);
         }
@@ -80,7 +143,7 @@ namespace Repository
             return await HockeyStatistics.ToListAsync();
         }
 
-        public async Task<SoccerStatistic> GetSoccerStatisticsById(int id)
+        public async Task<SoccerStatistic> GetSoccerStatisticsById(Guid id)
         {
             return await SoccerStatistics.FindAsync(id);
         }
@@ -90,46 +153,36 @@ namespace Repository
         }
 
         // UpdateStatistic
-        // Potential to do this with object parameter and switch casing which statistic type to return
-        // Would have to convert object to specific model via mapper.
-        // Pros: Condensed to one function
-        // Cons: Increased complexity, error prone, might require a generic statistic model
-        // Much easier to just overload function -- probably easier to read as well
-        // Not even sure why I took the ten minutes to consider this option. 
-        public async Task<BaseballStatistic> UpdateStatistic(BaseballStatistic baseballStatistic, int id)
+        public async Task<BaseballStatistic> UpdateStatistic(BaseballStatistic baseballStatistic, Guid id)
         {
             BaseballStatistics.Update(baseballStatistic);
             return await BaseballStatistics.FindAsync(id);
         }
 
-        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic, int id)
-        {
-            BasketballStatistics.Update(basketballStatistic);
-            return await BasketballStatistics.FindAsync(id);
-        }
-
-        public async Task<FootBallStatistic> UpdateStatistic(FootBallStatistic footballStatistic, int id)
+        public async Task<FootBallStatistic> UpdateStatistic(FootBallStatistic footballStatistic, Guid id)
         {
             FootballStatistics.Update(footballStatistic);
             return await FootballStatistics.FindAsync(id);
         }
 
-        public async Task<GolfStatistic> UpdateStatistic(GolfStatistic golfStatistic, int id)
+        public async Task<GolfStatistic> UpdateStatistic(GolfStatistic golfStatistic, Guid id)
         {
             GolfStatistics.Update(golfStatistic);
             return await GolfStatistics.FindAsync(id);
         }
 
-        public async Task<HockeyStatistic> UpdateStatistic(HockeyStatistic hockeyStatistic, int id)
+        public async Task<HockeyStatistic> UpdateStatistic(HockeyStatistic hockeyStatistic, Guid id)
         {
             HockeyStatistics.Update(hockeyStatistic);
             return await HockeyStatistics.FindAsync(id);
         }
 
-        public async Task<SoccerStatistic> UpdateStatistic(SoccerStatistic soccerStatistic, int id)
+        public async Task<SoccerStatistic> UpdateStatistic(SoccerStatistic soccerStatistic, Guid id)
         {
             SoccerStatistics.Update(soccerStatistic);
             return await SoccerStatistics.FindAsync(id);
         }
+
+        */
     }
 }

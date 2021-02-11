@@ -25,6 +25,6 @@ namespace Models
         public int Fouls { get; set; }
         [DisplayName("Possession Time")]
         public int PossessionTime { get; set; }
-
+        public int SportId { get; set; }
     }
 }

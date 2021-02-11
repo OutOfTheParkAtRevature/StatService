@@ -24,5 +24,6 @@ namespace Models
 
         public int StrikeOuts { get; set; }
         public int Saves { get; set; }
+        //public int SportId { get; set; }
     }
 }

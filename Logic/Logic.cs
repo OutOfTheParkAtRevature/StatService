@@ -18,21 +18,118 @@ namespace Service
         private readonly Repo _repo;
         private readonly ILogger<Repo> _logger;
 
-        /**************************************************
+        /********************************************************************************
+         * What we can do:
+         *      Create empty statistic
+         *      Get statistic by guid
+         *      Get statistic by user id and game id
+         *      Get player's overall statistics
+         *      Update statistics for a particular game
+         *      Delete statistic from the database
+         *      
          * TODO:
-         *      Update player statistic -- in progress
-         *      Get player statistic for one game
+         *      Model Dto's
+         *      Send appropriate Dto's back based on frontend needs
+         *      Implement all methods for other sports
+         *      Rethink logic of having GetBasketballStatisticById vs GetGameStatistic
+         *          -- They do the same thing, but with different input paramters?
          *
-         *      Fix naming conventions
-         *      Make sure all functions are saving changes.
-         **************************************************/
+         ********************************************************************************/
 
-
-        public async Task<BasketballStatistic> GetPlayerStatistic(int id){
+        // May change this method to create statistic with passed parameters -- allows overloading
+        /// <summary>
+        /// Creates an empty basketball statistic for a player. Statistic can be updated with UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> CreateStatistic()
+        {
+            BasketballStatistic bs = new BasketballStatistic();
+            return await _repo.CreateStatistic(bs);
+        }
+ 
+        /// <summary>
+        /// Takes an id and retrieves matching specified basketball statistic for a team or an individual.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetBasketballStatisticById(Guid id){
             return await _repo.GetBasketballStatisticsById(id);
         }
 
-        public async Task<BaseballStatistic> UpdatePlayerStatistic(BaseballStatistic b, int id)
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetGameStatistic(userId, gameId);
+        }
+
+        /// <summary>
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetPlayerOverallStatistic(Guid userId)
+        {
+            // create basketball statistic to return
+            BasketballStatistic basketballStatistic = new BasketballStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<BasketballStatistic> basketballStatisticList = await _repo.GetBasketballStatistic();
+            // add all stats together
+            foreach(BasketballStatistic b in basketballStatisticList)
+            {
+                basketballStatistic.Assists += b.Assists;
+                basketballStatistic.FGoals += b.FGoals;
+                basketballStatistic.Fouls += b.Fouls;
+                basketballStatistic.FThrows += b.FThrows;
+                basketballStatistic.Rebounds += b.Rebounds;
+                basketballStatistic.Steals += b.Steals;
+                basketballStatistic.Turnovers += b.Turnovers;
+            }
+            // return total
+            return basketballStatistic;
+        }
+
+        // May be redundant to send id in since we can grab the id from the basketball statistic model
+        /// <summary>
+        /// Takes an id and additional basketball statistics, retrieves matching specified basketball statistic to update for a team or an individual and adds the stats.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic/*, Guid id*/)
+        {
+            // Get player stat line id
+            BasketballStatistic updatedBasketballStatistic = await _repo.GetBasketballStatisticsById(basketballStatistic.StatLineID);
+
+            // Add new stats
+            updatedBasketballStatistic.Assists = basketballStatistic.Assists;
+            updatedBasketballStatistic.FGoals = basketballStatistic.FGoals;
+            updatedBasketballStatistic.Fouls = basketballStatistic.Fouls;
+            updatedBasketballStatistic.FThrows = basketballStatistic.FThrows;
+            updatedBasketballStatistic.Rebounds = basketballStatistic.Rebounds;
+            updatedBasketballStatistic.Steals = basketballStatistic.Steals;
+            updatedBasketballStatistic.Turnovers = basketballStatistic.Turnovers;
+
+            // Update statistics and return updated statistics
+            return await _repo.UpdateStatistic(updatedBasketballStatistic, id);
+        }
+
+        /// <summary>
+        /// Takes a basketball statistic and removes it from the database.
+        /// </summary>
+        /// <param name="basketballStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(BasketballStatistic basketballStatistic)
+        {
+            await _repo.DeleteStatistic(basketballStatistic);
+        }
+
+        /*
+        public async Task<BaseballStatistic> UpdatePlayerStatistic(BaseballStatistic b, Guid id)
         {
             // Get player stat line id
             BaseballStatistic bs = await _repo.GetBaseballStatisticsById(id);
@@ -53,25 +150,7 @@ namespace Service
             return await _repo.UpdateStatistic(bs, id);
         }
 
-        public async Task<BasketballStatistic> UpdatePlayerStatistic(BasketballStatistic b, int id)
-        {
-            // Get player stat line id
-            BasketballStatistic bs = await _repo.GetBasketballStatisticsById(id);
-
-            // Add new stats
-            bs.Assists += b.Assists;
-            bs.FGoals += b.FGoals;
-            bs.Fouls += b.Fouls;
-            bs.FThrows += b.FThrows;
-            bs.Rebounds += b.Rebounds;
-            bs.Steals += b.Steals;
-            bs.Turnovers += b.Turnovers;
-
-            // Update Player and return
-            return await _repo.UpdateStatistic(bs, id);
-        }
-
-        public async Task<FootBallStatistic> UpdatePlayerStatistic(FootBallStatistic b, int id)
+        public async Task<FootBallStatistic> UpdatePlayerStatistic(FootBallStatistic b, Guid id)
         {
             // Get player stat line id
             FootBallStatistic bs = await _repo.GetFootBallStatisticsById(id);
@@ -90,7 +169,7 @@ namespace Service
         }
 
         // This one may be handled differently because golf statistics are handled on a game by game basis.
-        public async Task<GolfStatistic> UpdatePlayerStatistic(GolfStatistic b, int id)
+        public async Task<GolfStatistic> UpdatePlayerStatistic(GolfStatistic b, Guid id)
         {
             // Get player stat line id
             GolfStatistic bs = await _repo.GetGolfStatisticsById(id);
@@ -111,7 +190,7 @@ namespace Service
             return await _repo.UpdateStatistic(bs, id);
         }
 
-        public async Task<HockeyStatistic> UpdatePlayerStatistic(HockeyStatistic b, int id)
+        public async Task<HockeyStatistic> UpdatePlayerStatistic(HockeyStatistic b, Guid id)
         {
             // Get player stat line id
             HockeyStatistic bs = await _repo.GetHockeyStatisticsById(id);
@@ -133,7 +212,7 @@ namespace Service
 
         // This function written slightly different at the end.
         // Experimenting with just making repo use 'async Task' instead of returning something.
-        public async Task<SoccerStatistic> UpdatePlayerStatistic(SoccerStatistic b, int id)
+        public async Task<SoccerStatistic> UpdatePlayerStatistic(SoccerStatistic b, Guid id)
         {
             // Get player stat line id
             SoccerStatistic bs = await _repo.GetSoccerStatisticsById(id);
@@ -153,5 +232,6 @@ namespace Service
 
             return bs;
         }
+        */
     }
 }

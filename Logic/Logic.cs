@@ -22,7 +22,6 @@ namespace Service
          * What we can do:
          *      Create empty statistic
          *      Get statistic by guid
-         *      Get statistic by user id and game id
          *      Get player's overall statistics
          *      Update statistics for a particular game
          *      Delete statistic from the database
@@ -31,8 +30,6 @@ namespace Service
          *      Model Dto's
          *      Send appropriate Dto's back based on frontend needs
          *      Implement all methods for other sports
-         *      Rethink logic of having GetBasketballStatisticById vs GetGameStatistic
-         *          -- They do the same thing, but with different input paramters?
          *
          ********************************************************************************/
 
@@ -57,6 +54,7 @@ namespace Service
             return await _repo.GetBasketballStatisticsById(id);
         }
 
+        /*
         /// <summary>
         /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns stats from that game.
         /// </summary>
@@ -66,18 +64,20 @@ namespace Service
         {
             return await _repo.GetGameStatistic(userId, gameId);
         }
+        */
 
+        /*
         /// <summary>
         /// Summarizes player statistics from the season.
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> GetPlayerOverallStatistic(Guid userId)
+        public async Task<BasketballStatistic> GetPlayerOverallStatistic(Guid id)
         {
             // create basketball statistic to return
             BasketballStatistic basketballStatistic = new BasketballStatistic();
             // get list of all stats with userId filtering result
-            IEnumerable<BasketballStatistic> basketballStatisticList = await _repo.GetBasketballStatistic();
+            IEnumerable<BasketballStatistic> basketballStatisticList = await _repo.GetBasketballStatisticByPlayerId(id);
             // add all stats together
             foreach(BasketballStatistic b in basketballStatisticList)
             {
@@ -92,6 +92,7 @@ namespace Service
             // return total
             return basketballStatistic;
         }
+        */
 
         // May be redundant to send id in since we can grab the id from the basketball statistic model
         /// <summary>
@@ -115,7 +116,7 @@ namespace Service
             updatedBasketballStatistic.Turnovers = basketballStatistic.Turnovers;
 
             // Update statistics and return updated statistics
-            return await _repo.UpdateStatistic(updatedBasketballStatistic, id);
+            return await _repo.UpdateStatistic(updatedBasketballStatistic);
         }
 
         /// <summary>

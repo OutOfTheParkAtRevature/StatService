@@ -17,7 +17,6 @@ namespace Repository
         public DbSet<HockeyStatistic> HockeyStatistics { get; set; }
         public DbSet<SoccerStatistic> SoccerStatistics { get; set; }
         public DbSet<PlayerGame> PlayerGames { get; set; }
-        public DbSet<ApplicationUser> Users { get; set; }
 
         public StatsContext() { }
         public StatsContext(DbContextOptions<StatsContext> options) : base(options) { }

@@ -27,6 +27,5 @@ namespace Models
         public int CornerKicks { get; set; }
         [DisplayName("Possession Time")]
         public int PossessionTime { get; set; }
-        //public int SportId { get; set; }
     }
 }

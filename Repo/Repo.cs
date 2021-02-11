@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,7 +20,6 @@ namespace Repository
         public DbSet<HockeyStatistic> HockeyStatistics;
         public DbSet<SoccerStatistic> SoccerStatistics;
         public DbSet<PlayerGame> PlayerGames;
-        public DbSet<ApplicationUser> Users;
 
         public Repo(StatsContext teamContext, ILogger<Repo> logger)
         {
@@ -32,7 +32,6 @@ namespace Repository
             this.HockeyStatistics = _statsContext.HockeyStatistics;
             this.SoccerStatistics = _statsContext.SoccerStatistics;
             this.PlayerGames = _statsContext.PlayerGames;
-            this.Users = _statsContext.Users;
         }
 
         public async Task CommitSave()
@@ -54,9 +53,8 @@ namespace Repository
             return await BasketballStatistics.FindAsync(id);
         }
 
-        // TODO: Double check that Find does what is expected.
         /// <summary>
-        /// Gets the specified player's statistics for a single game.
+        /// Takes user id and game id, then gets the specified player's statistics for a single game.
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
@@ -64,7 +62,7 @@ namespace Repository
         public async Task<BasketballStatistic> GetGameStatistic(Guid userId, Guid gameId)
         {
             // Get stat line id
-            Guid statLineId = PlayerGames.Find(userId, gameId).StatLineID;
+            Guid statLineId = PlayerGames.FirstOrDefaultAsync(x=>x.UserID == userId && x.GameID == gameId).Result.StatLineID;
             // Return stats for that game.
             return await BasketballStatistics.FindAsync(statLineId);
         }
@@ -78,6 +76,23 @@ namespace Repository
             return await BasketballStatistics.ToListAsync();
         }
 
+        /*
+        public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatisticByPlayerId(Guid id)
+        {
+            // some generic bull
+            List<BasketballStatistic> basketballStatisticList = new List<BasketballStatistic>();
+            // get all stat line ids where player id matches
+            IEnumerable<Guid> statLineIdList = await PlayerGames.Where(x=>x.UserID == id);
+            // grab basketball stats using that list
+            foreach(Guid s in statLineIdList)
+            {
+                
+            }
+            return await BasketballStatistics.Where(x=>x.st).ToList();
+            // add all stat lines to a basketball statistics list
+        }
+        */
+
         // UpdateStatistic
         /// <summary>
         /// Updates basketball statistics with passed data.
@@ -85,11 +100,11 @@ namespace Repository
         /// <param name="basketballStatistic"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic, Guid id)
+        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic basketballStatistic)
         {
             BasketballStatistics.Update(basketballStatistic);
             await CommitSave();
-            return await BasketballStatistics.FindAsync(id);
+            return await BasketballStatistics.FindAsync(basketballStatistic.StatLineID);
         }
 
         // DeleteStatistic

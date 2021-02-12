@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.DataTransfer
 {
-    public class TeamStatDto
+    public class CreateTeamGameDto
     {
-
     }
 }

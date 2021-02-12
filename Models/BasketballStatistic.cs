@@ -13,9 +13,10 @@ namespace Models
         [Key]
         [DisplayName("StatLine ID")]
         public Guid StatLineID { get; set; }
-        public int Runs { get; set; }
         [DisplayName("Field Goals")]
         public int FGoals { get; set; }
+        [DisplayName("Three Pointers")]
+        public int ThreePts { get; set; }
         [DisplayName("Free Throws")]
         public int FThrows { get; set; }
         public int Rebounds { get; set; }
@@ -25,6 +26,5 @@ namespace Models
         public int Fouls { get; set; }
         [DisplayName("Possession Time")]
         public int PossessionTime { get; set; }
-        public int SportId { get; set; }
     }
 }

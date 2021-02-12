@@ -17,18 +17,14 @@ namespace Repository
         public DbSet<HockeyStatistic> HockeyStatistics { get; set; }
         public DbSet<SoccerStatistic> SoccerStatistics { get; set; }
         public DbSet<PlayerGame> PlayerGames { get; set; }
-        public DbSet<ApplicationUser> Users { get; set; }
 
         public StatsContext() { }
         public StatsContext(DbContextOptions<StatsContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            if (!options.IsConfigured)
-            {
-               options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=LeagueDB;Trusted_Connection = True;");
-            }
-
+            modelBuilder.Entity<PlayerGame>()
+                .HasKey(p => new { p.UserID, p.GameID });
         }
     }
 }

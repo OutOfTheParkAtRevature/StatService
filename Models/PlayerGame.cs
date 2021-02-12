@@ -11,10 +11,8 @@ namespace Models
 {
     public class PlayerGame
     {
-        [Key, Column(Order = 1)]
         [DisplayName("User ID")]
         public Guid UserID { get; set; }
-        [Key, Column(Order = 2)]
         [DisplayName("Game ID")]
         public Guid GameID { get; set; }
         [DisplayName("Stat Line")]

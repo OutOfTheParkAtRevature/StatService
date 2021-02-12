@@ -20,5 +20,11 @@ namespace Repository
 
         public StatsContext() { }
         public StatsContext(DbContextOptions<StatsContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PlayerGame>()
+                .HasKey(p => new { p.UserID, p.GameID });
+        }
     }
 }

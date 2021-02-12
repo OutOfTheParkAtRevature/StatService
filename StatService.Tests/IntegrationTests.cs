@@ -1,11 +1,22 @@
 using System;
 using Xunit;
 
-namespace StatService.Tests {
-    public class IntegrationTests {
-        [Fact]
-        public void TestNothing() {
+using Repository;
+using Service;
+using Models;
 
+using StatService.Tests.Utils;
+
+namespace StatService.Tests {
+    public class IntegrationTests : IClassFixture<StatFactory<Startup>> {
+        private StatFactory<Startup> Factory;
+        public IntegrationTests(StatFactory<Startup> factory) {
+            Factory = factory; 
+        }
+        [Fact]
+        public void TestClientInitialize() {
+            var client = Factory.CreateClient();
+            Assert.NotNull(client);
         }
     }
 }

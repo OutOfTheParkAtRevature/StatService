@@ -16,7 +16,7 @@ namespace Repository.Tests {
                 .Options;
             var ctx = new StatsContext(opt);
             var repo = new Repo(ctx, null);
-            IEnumerable<BaseballStatistic> estats = await repo.GetBaseballStatistics();
+            IEnumerable<BaseballStatistic> estats = await repo.GetBaseballStatistic();
             List<BaseballStatistic> lstats = estats.ToList();
             Assert.Empty(lstats);
         }

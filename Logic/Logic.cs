@@ -18,7 +18,7 @@ namespace Service
         private readonly Repo _repo;
         private readonly ILogger<Repo> _logger;
 
-        /********************************************************************************
+        /******************************************************************************************
          * What we can do:
          *      Create empty statistic
          *      Get statistic by guid
@@ -27,26 +27,80 @@ namespace Service
          *      Delete statistic from the database
          *      
          * TODO:
-         *      Model Dto's
-         *      Send appropriate Dto's back based on frontend needs
-         *      Implement all methods for other sports
+         *      Send appropriate Dto's back based on frontend needs -- need to meet with Ryan
          *
-         ********************************************************************************/
+         *****************************************************************************************/
 
-        // May change this method to create statistic with passed parameters -- allows overloading
+        // CreateStatistic
         /// <summary>
-        /// Creates an empty basketball statistic for a player. Statistic can be updated with UpdateStatistic method.
+        /// Creates a basketball statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> CreateStatistic()
+        public async Task<BasketballStatistic> CreateStatistic(BasketballStatistic basketballStatistic)
         {
-            BasketballStatistic bs = new BasketballStatistic();
-            return await _repo.CreateStatistic(bs);
+            return await _repo.CreateStatistic(basketballStatistic);
         }
- 
+
+        /// Creates a baseball statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> CreateStatistic(BaseballStatistic baseballStatistic)
+        {
+            return await _repo.CreateStatistic(baseballStatistic);
+        }
+
+        /// Creates a football statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> CreateStatistic(FootBallStatistic footballStatistic)
+        {
+            return await _repo.CreateStatistic(footballStatistic);
+        }
+
+        /// Creates a golf statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> CreateStatistic(GolfStatistic golfStatistic)
+        {
+            return await _repo.CreateStatistic(golfStatistic);
+        }
+
+        /// Creates a hockey statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> CreateStatistic(HockeyStatistic hockeyStatistic)
+        {
+            return await _repo.CreateStatistic(hockeyStatistic);
+        }
+
+        /// Creates a soccer statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> CreateStatistic(SoccerStatistic soccerStatistic)
+        {
+            return await _repo.CreateStatistic(soccerStatistic);
+        }
+
+
+        /*****************************************************************************************/
+
+
+        // GetSportStatisticById
         /// <summary>
-        /// Takes an id and retrieves matching specified basketball statistic for a team or an individual.
+        /// Takes an id and retrieves matching specified basketball statistic for a team or an 
+        /// individual.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -54,24 +108,143 @@ namespace Service
             return await _repo.GetBasketballStatisticsById(id);
         }
 
-        
         /// <summary>
-        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns stats from that game.
+        /// Takes an id and retrieves matching specified baseball statistic for a team or an 
+        /// individual.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> GetGameStatistic(Guid userId, Guid gameId)
+        public async Task<BaseballStatistic> GetBaseballStatisticById(Guid id)
         {
-            return await _repo.GetGameStatistic(userId, gameId);
-        }   
+            return await _repo.GetBaseballStatisticsById(id);
+        }
 
-        
+        /// <summary>
+        /// Takes an id and retrieves matching specified football statistic for a team or an 
+        /// individual.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> GetFootballStatisticById(Guid id)
+        {
+            return await _repo.GetFootballStatisticsById(id);
+        }
+
+        /// <summary>
+        /// Takes an id and retrieves matching specified golf statistic for a team or an 
+        /// individual.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> GetGolfStatisticById(Guid id)
+        {
+            return await _repo.GetGolfStatisticsById(id);
+        }
+
+        /// <summary>
+        /// Takes an id and retrieves matching specified hockey statistic for a team or an 
+        /// individual.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> GetHockeyStatisticById(Guid id)
+        {
+            return await _repo.GetHockeyStatisticsById(id);
+        }
+
+        /// <summary>
+        /// Takes an id and retrieves matching specified baseball statistic for a team or an 
+        /// individual.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> GetSoccerStatisticById(Guid id)
+        {
+            return await _repo.GetSoccerStatisticsById(id);
+        }
+
+
+        /*****************************************************************************************/
+
+
+        // GetSportGameStatistic
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetBasketballGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetBasketballGameStatistic(userId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> GetBaseballGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetBaseballGameStatistic(userId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> GetFootballGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetFootballGameStatistic(userId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> GetGolfGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetGolfGameStatistic(userId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> GetHockeyGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetHockeyGameStatistic(userId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a user id  to retrieve statline from PlayerGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> GetSoccerGameStatistic(Guid userId, Guid gameId)
+        {
+            return await _repo.GetSoccerGameStatistic(userId, gameId);
+        }
+
+
+        /*****************************************************************************************/
+
+
+        // GetPlayerOverallSportStatistic
         /// <summary>
         /// Summarizes player statistics from the season.
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> GetPlayerOverallStatistic(Guid id)
+        public async Task<BasketballStatistic> GetPlayerOverallBasketballStatistic(Guid id)
         {
             // create basketball statistic to return
             BasketballStatistic basketballStatistic = new BasketballStatistic();
@@ -92,14 +265,158 @@ namespace Service
             return basketballStatistic;
         }
 
-        // May be redundant to send id in since we can grab the id from the basketball statistic model
         /// <summary>
-        /// Takes an id and additional basketball statistics, retrieves matching specified basketball statistic to update for a team or an individual and adds the stats.
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> GetPlayerOverallBaseballStatistic(Guid id)
+        {
+            // create baseball statistic to return
+            BaseballStatistic baseballStatistic = new BaseballStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<BaseballStatistic> baseballStatisticList = await _repo.GetBaseballStatisticByPlayerId(id);
+            // add all stats together
+            foreach (BaseballStatistic b in baseballStatisticList)
+            {
+                baseballStatistic.BattingAve += b.BattingAve;
+                baseballStatistic.ERA += b.ERA;
+                baseballStatistic.Hits += b.Hits;
+                baseballStatistic.RBI += b.RBI;
+                baseballStatistic.Runs += b.Runs;
+                baseballStatistic.Saves += b.Saves;
+                baseballStatistic.Steals += b.Steals;
+                baseballStatistic.StrikeOuts += b.StrikeOuts;
+            }
+            // return total
+            return baseballStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> GetPlayerOverallFootballStatistic(Guid id)
+        {
+            // create football statistic to return
+            FootBallStatistic footballStatistic = new FootBallStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<FootBallStatistic> footballStatisticList = await _repo.GetFootballStatisticByPlayerId(id);
+            // add all stats together
+            foreach (FootBallStatistic f in footballStatisticList)
+            {
+                footballStatistic.FirstDownCons += f.FirstDownCons;
+                footballStatistic.Penalties += f.Penalties;
+                footballStatistic.Plays += f.Plays;
+                footballStatistic.PossessionTime += f.PossessionTime;
+                footballStatistic.Sacks += f.Sacks;
+                footballStatistic.Turnovers += f.Turnovers;
+                footballStatistic.YardsRec += f.YardsRec;
+                footballStatistic.YardsRun += f.YardsRun;
+            }
+            // return total
+            return footballStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> GetPlayerOverallGolfStatistic(Guid id)
+        {
+            // create golf statistic to return
+            GolfStatistic golfStatistic = new GolfStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<GolfStatistic> golfStatisticList = await _repo.GetGolfStatisticByPlayerId(id);
+            // add all stats together
+            foreach (GolfStatistic g in golfStatisticList)
+            {
+                golfStatistic.Birdies += g.Birdies;
+                golfStatistic.Bogeys += g.Bogeys;
+                golfStatistic.DriveAccuracy += g.DriveAccuracy;
+                golfStatistic.DriveDistance += g.DriveDistance;
+                golfStatistic.Eagles += g.Eagles;
+                golfStatistic.GIR += g.GIR;
+                golfStatistic.PutsperGIR += g.PutsperGIR;
+                golfStatistic.SandSaves += g.SandSaves;
+                golfStatistic.ScoreToPar += g.ScoreToPar;
+                golfStatistic.Scrambles += g.Scrambles;
+            }
+            // return total
+            return golfStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> GetPlayerOverallHockeyStatistic(Guid id)
+        {
+            // create hockey statistic to return
+            HockeyStatistic hockeyStatistic = new HockeyStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<HockeyStatistic> hockeyStatisticList = await _repo.GetHockeyStatisticByPlayerId(id);
+            // add all stats together
+            foreach (HockeyStatistic h in hockeyStatisticList)
+            {
+                hockeyStatistic.Blocks += h.Blocks;
+                hockeyStatistic.FaceOffWins += h.FaceOffWins;
+                hockeyStatistic.GiveAways += h.GiveAways;
+                hockeyStatistic.Goals += h.Goals;
+                hockeyStatistic.Hits += h.Hits;
+                hockeyStatistic.PenaltyMins += h.PenaltyMins;
+                hockeyStatistic.PowerPlayOpps += h.PowerPlayOpps;
+                hockeyStatistic.Shots += h.Shots;
+                hockeyStatistic.TakeAWays += h.TakeAWays;
+            }
+            // return total
+            return hockeyStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> GetPlayerOverallSoccerStatistic(Guid id)
+        {
+            // create soccer statistic to return
+            SoccerStatistic soccerStatistic = new SoccerStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<SoccerStatistic> soccerStatisticList = await _repo.GetSoccerStatisticByPlayerId(id);
+            // add all stats together
+            foreach (SoccerStatistic s in soccerStatisticList)
+            {
+                soccerStatistic.CornerKicks += s.CornerKicks;
+                soccerStatistic.Fouls += s.Fouls;
+                soccerStatistic.Goals += s.Goals;
+                soccerStatistic.OffSides += s.OffSides;
+                soccerStatistic.PossessionTime += s.PossessionTime;
+                soccerStatistic.RedCards += s.RedCards;
+                soccerStatistic.ShotOnGoal += s.ShotOnGoal;
+                soccerStatistic.yellowCards += s.yellowCards;
+            }
+            // return total
+            return soccerStatistic;
+        }
+
+
+
+        /*****************************************************************************************/
+
+
+        // UpdateStatistic -- might want to implement validation checking in these
+        /// <summary>
+        /// Takes a basketball statistic, retrieves matching basketball statistic to update 
+        /// for a team or an individual.
         /// </summary>
         /// <param name="b"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic updatedBasketballStatistic/*, Guid id*/)
+        public async Task<BasketballStatistic> UpdateStatistic(BasketballStatistic updatedBasketballStatistic)
         {
             // Get player stat line id
             BasketballStatistic basketballStatistic = await _repo.GetBasketballStatisticsById(updatedBasketballStatistic.StatLineID);
@@ -118,6 +435,144 @@ namespace Service
         }
 
         /// <summary>
+        /// Takes a baseball statistic, retrieves matching baseball statistic to update 
+        /// for a team or an individual.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> UpdateStatistic(BaseballStatistic updatedBaseballStatistic)
+        {
+            // Get player stat line id
+            BaseballStatistic baseballStatistic = await _repo.GetBaseballStatisticsById(updatedBaseballStatistic.StatLineID);
+
+            // Add new stats
+            baseballStatistic.BattingAve = updatedBaseballStatistic.BattingAve;
+            baseballStatistic.ERA = updatedBaseballStatistic.ERA;
+            baseballStatistic.Hits = updatedBaseballStatistic.Hits;
+            baseballStatistic.RBI = updatedBaseballStatistic.RBI;
+            baseballStatistic.Runs = updatedBaseballStatistic.Runs;
+            baseballStatistic.Saves = updatedBaseballStatistic.Saves;
+            baseballStatistic.Steals = updatedBaseballStatistic.Steals;
+            baseballStatistic.StrikeOuts = updatedBaseballStatistic.StrikeOuts;
+
+            // Update statistics and return updated statistics
+            return await _repo.UpdateStatistic(baseballStatistic);
+        }
+
+        /// <summary>
+        /// Takes a football statistic, retrieves matching football statistic to update 
+        /// for a team or an individual.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> UpdateStatistic(FootBallStatistic updatedFootballStatistic)
+        {
+            // Get player stat line id
+            FootBallStatistic footballStatistic = await _repo.GetFootballStatisticsById(updatedFootballStatistic.StatLineID);
+
+            // Add new stats
+            footballStatistic.FirstDownCons = updatedFootballStatistic.FirstDownCons;
+            footballStatistic.Penalties = updatedFootballStatistic.Penalties;
+            footballStatistic.Plays = updatedFootballStatistic.Plays;
+            footballStatistic.PossessionTime = updatedFootballStatistic.PossessionTime;
+            footballStatistic.Sacks = updatedFootballStatistic.Sacks;
+            footballStatistic.Turnovers = updatedFootballStatistic.Turnovers;
+            footballStatistic.YardsRec = updatedFootballStatistic.YardsRec;
+            footballStatistic.YardsRun = updatedFootballStatistic.YardsRun;
+
+            // Update statistics and return updated statistics
+            return await _repo.UpdateStatistic(footballStatistic);
+        }
+
+        /// <summary>
+        /// Takes a golf statistic, retrieves matching golf statistic to update 
+        /// for a team or an individual.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> UpdateStatistic(GolfStatistic updatedGolfStatistic)
+        {
+            // Get player stat line id
+            GolfStatistic golfStatistic = await _repo.GetGolfStatisticsById(updatedGolfStatistic.StatLineID);
+
+            // Add new stats
+            golfStatistic.Birdies = updatedGolfStatistic.Birdies;
+            golfStatistic.Bogeys = updatedGolfStatistic.Bogeys;
+            golfStatistic.DriveAccuracy = updatedGolfStatistic.DriveAccuracy;
+            golfStatistic.DriveDistance = updatedGolfStatistic.DriveDistance;
+            golfStatistic.Eagles = updatedGolfStatistic.Eagles;
+            golfStatistic.GIR = updatedGolfStatistic.GIR;
+            golfStatistic.PutsperGIR = updatedGolfStatistic.PutsperGIR;
+            golfStatistic.SandSaves = updatedGolfStatistic.SandSaves;
+            golfStatistic.ScoreToPar = updatedGolfStatistic.ScoreToPar;
+            golfStatistic.Scrambles = updatedGolfStatistic.Scrambles;
+
+            // Update statistics and return updated statistics
+            return await _repo.UpdateStatistic(golfStatistic);
+        }
+
+        /// <summary>
+        /// Takes a hockey statistic, retrieves matching hockey statistic to update 
+        /// for a team or an individual.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> UpdateStatistic(HockeyStatistic updatedHockeyStatistic)
+        {
+            // Get player stat line id
+            HockeyStatistic hockeyStatistic = await _repo.GetHockeyStatisticsById(updatedHockeyStatistic.StatLineID);
+
+            // Add new stats
+            hockeyStatistic.Blocks = updatedHockeyStatistic.Blocks;
+            hockeyStatistic.FaceOffWins = updatedHockeyStatistic.FaceOffWins;
+            hockeyStatistic.GiveAways = updatedHockeyStatistic.GiveAways;
+            hockeyStatistic.Goals = updatedHockeyStatistic.Goals;
+            hockeyStatistic.Hits = updatedHockeyStatistic.Hits;
+            hockeyStatistic.PenaltyMins = updatedHockeyStatistic.PenaltyMins;
+            hockeyStatistic.PowerPlayOpps = updatedHockeyStatistic.PowerPlayOpps;
+            hockeyStatistic.Shots = updatedHockeyStatistic.Shots;
+            hockeyStatistic.TakeAWays = updatedHockeyStatistic.TakeAWays;
+
+            // Update statistics and return updated statistics
+            return await _repo.UpdateStatistic(hockeyStatistic);
+        }
+
+        /// <summary>
+        /// Takes a soccer statistic, retrieves matching soccer statistic to update 
+        /// for a team or an individual.
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> UpdateStatistic(SoccerStatistic updatedSoccerStatistic)
+        {
+            // Get player stat line id
+            SoccerStatistic soccerStatistic = await _repo.GetSoccerStatisticsById(updatedSoccerStatistic.StatLineID);
+
+            // Add new stats
+            soccerStatistic.CornerKicks = updatedSoccerStatistic.CornerKicks;
+            soccerStatistic.Fouls = updatedSoccerStatistic.Fouls;
+            soccerStatistic.Goals = updatedSoccerStatistic.Goals;
+            soccerStatistic.OffSides = updatedSoccerStatistic.OffSides;
+            soccerStatistic.PossessionTime = updatedSoccerStatistic.PossessionTime;
+            soccerStatistic.RedCards = updatedSoccerStatistic.RedCards;
+            soccerStatistic.ShotOnGoal = updatedSoccerStatistic.ShotOnGoal;
+            soccerStatistic.yellowCards = updatedSoccerStatistic.yellowCards;
+
+            // Update statistics and return updated statistics
+            return await _repo.UpdateStatistic(soccerStatistic);
+        }
+
+
+        /*****************************************************************************************/
+
+
+        // DeleteStatistic
+        /// <summary>
         /// Takes a basketball statistic and removes it from the database.
         /// </summary>
         /// <param name="basketballStatistic"></param>
@@ -127,110 +582,54 @@ namespace Service
             await _repo.DeleteStatistic(basketballStatistic);
         }
 
-        /*
-        public async Task<BaseballStatistic> UpdatePlayerStatistic(BaseballStatistic b, Guid id)
+        /// <summary>
+        /// Takes a baseball statistic and removes it from the database.
+        /// </summary>
+        /// <param name="baseballStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(BaseballStatistic baseballStatistic)
         {
-            // Get player stat line id
-            BaseballStatistic bs = await _repo.GetBaseballStatisticsById(id);
-
-            // Add new stats
-            bs.Hits += b.Hits;
-            bs.Steals += b.Steals;
-            bs.Saves += b.Saves;
-            bs.StrikeOuts += b.StrikeOuts;
-            bs.RBI += b.RBI;
-
-            // The arithmetic needs to be changed to reflect averages for these variables
-            bs.ERA += b.ERA;
-            bs.BattingAve += b.BattingAve;
-
-
-            // Update Player and return
-            return await _repo.UpdateStatistic(bs, id);
+            await _repo.DeleteStatistic(baseballStatistic);
         }
 
-        public async Task<FootBallStatistic> UpdatePlayerStatistic(FootBallStatistic b, Guid id)
+        /// <summary>
+        /// Takes a football statistic and removes it from the database.
+        /// </summary>
+        /// <param name="footballStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(FootBallStatistic footballStatistic)
         {
-            // Get player stat line id
-            FootBallStatistic bs = await _repo.GetFootBallStatisticsById(id);
-
-            // Add new stats
-            bs.FirstDownCons += b.FirstDownCons;
-            bs.Penalties += b.Penalties;
-            bs.Plays += b.Plays;
-            bs.Sacks += b.Sacks;
-            bs.Turnovers += b.Turnovers;
-            bs.YardsRec += b.YardsRec;
-            bs.YardsRun += b.YardsRun;
-
-            // Update Player and return
-            return await _repo.UpdateStatistic(bs, id);
+            await _repo.DeleteStatistic(footballStatistic);
         }
 
-        // This one may be handled differently because golf statistics are handled on a game by game basis.
-        public async Task<GolfStatistic> UpdatePlayerStatistic(GolfStatistic b, Guid id)
+        /// <summary>
+        /// Takes a golf statistic and removes it from the database.
+        /// </summary>
+        /// <param name="golfStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(GolfStatistic golfStatistic)
         {
-            // Get player stat line id
-            GolfStatistic bs = await _repo.GetGolfStatisticsById(id);
-
-            // Add new stats
-            bs.Birdies += b.Birdies;
-            bs.Bogeys += b.Bogeys;
-            bs.DriveAccuracy += b.DriveAccuracy;
-            bs.DriveDistance += b.DriveDistance;
-            bs.Eagles += b.Eagles;
-            bs.GIR += b.GIR;
-            bs.PutsperGIR += b.PutsperGIR;
-            bs.SandSaves += b.SandSaves;
-            bs.ScoreToPar += b.ScoreToPar;
-            bs.Scrambles += b.Scrambles;
-
-            // Update Player and return
-            return await _repo.UpdateStatistic(bs, id);
+            await _repo.DeleteStatistic(golfStatistic);
         }
 
-        public async Task<HockeyStatistic> UpdatePlayerStatistic(HockeyStatistic b, Guid id)
+        /// <summary>
+        /// Takes a hockey statistic and removes it from the database.
+        /// </summary>
+        /// <param name="hockeyStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(HockeyStatistic hockeyStatistic)
         {
-            // Get player stat line id
-            HockeyStatistic bs = await _repo.GetHockeyStatisticsById(id);
-
-            // Add new stats
-            bs.Blocks += b.Blocks;
-            bs.FaceOffWins += b.FaceOffWins;
-            bs.GiveAways += b.GiveAways;
-            bs.Goals += b.Goals;
-            bs.Hits += b.Hits;
-            bs.PenaltyMins += b.PenaltyMins;
-            bs.PowerPlayOpps += b.PowerPlayOpps;
-            bs.Shots += b.Shots;
-            bs.TakeAWays += b.TakeAWays;
-
-            // Update Player and return
-            return await _repo.UpdateStatistic(bs, id);
+            await _repo.DeleteStatistic(hockeyStatistic);
         }
 
-        // This function written slightly different at the end.
-        // Experimenting with just making repo use 'async Task' instead of returning something.
-        public async Task<SoccerStatistic> UpdatePlayerStatistic(SoccerStatistic b, Guid id)
+        /// <summary>
+        /// Takes a soccer statistic and removes it from the database.
+        /// </summary>
+        /// <param name="soccerStatistic"></param>
+        /// <returns></returns>
+        public async Task DeleteStatistic(SoccerStatistic soccerStatistic)
         {
-            // Get player stat line id
-            SoccerStatistic bs = await _repo.GetSoccerStatisticsById(id);
-
-            // Add new stats
-            bs.CornerKicks += b.CornerKicks;
-            bs.Fouls += b.Fouls;
-            bs.Goals += b.Goals;
-            bs.OffSides += b.OffSides;
-            bs.RedCards += b.RedCards;
-            bs.ShotOnGoal += b.ShotOnGoal;
-            bs.yellowCards += b.yellowCards;
-
-            // Update Player and return
-            await _repo.UpdateStatistic(bs, id);
-            await _repo.CommitSave();
-
-            return bs;
+            await _repo.DeleteStatistic(soccerStatistic);
         }
-        */
     }
 }

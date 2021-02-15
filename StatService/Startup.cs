@@ -37,6 +37,23 @@ namespace StatService
             services.AddControllers();
             services.AddDbContext<StatsContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("LocalDB")));
+
+            //Add cors with any origin
+            services.AddCors(options =>
+            {
+                options.AddPolicy("policy1",
+                    builder =>
+                    {
+                        builder.WithOrigins(
+                            "http://localhost:4200",
+                            "https://localhost:4200",
+                            "http://magic-match.azurewebsites.net",
+                            "https://magic-match.azurewebsites.net"
+                        )
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                    });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StatService", Version = "v1" });
@@ -56,6 +73,8 @@ namespace StatService
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            //Inject cors
+            app.UseCors("policy1");
 
             app.UseAuthorization();
 

@@ -45,7 +45,7 @@ namespace StatService.Controllers
         // PUT: api/PlayerGames/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayerGame(Guid id, PlayerGame playerGame)
+        public async Task<IActionResult> PutPlayerGame(string id, PlayerGame playerGame)
         {
             if (id != playerGame.UserID)
             {
@@ -100,7 +100,7 @@ namespace StatService.Controllers
 
         // DELETE: api/PlayerGames/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlayerGame(Guid id)
+        public async Task<IActionResult> DeletePlayerGame(string id)
         {
             var playerGame = await _context.PlayerGames.FindAsync(id);
             if (playerGame == null)
@@ -114,7 +114,7 @@ namespace StatService.Controllers
             return NoContent();
         }
 
-        private bool PlayerGameExists(Guid id)
+        private bool PlayerGameExists(string id)
         {
             return _context.PlayerGames.Any(e => e.UserID == id);
         }

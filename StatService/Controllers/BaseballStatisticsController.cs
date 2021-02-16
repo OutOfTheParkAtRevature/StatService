@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Repository;
+using Service;
 
 namespace StatService.Controllers
 {
@@ -15,16 +16,21 @@ namespace StatService.Controllers
     public class BaseballStatisticsController : ControllerBase
     {
         private readonly StatsContext _context;
+        private readonly Logic _logic;
 
-        public BaseballStatisticsController(StatsContext context)
+        public BaseballStatisticsController(StatsContext context, Logic logic)
         {
             _context = context;
+            _logic = logic;
         }
 
         // GET: api/BaseballStatistics
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BaseballStatistic>>> GetBaseballStatistics()
         {
+
+
+           // return await _logic.GetBaseballGameStatistic();
             return await _context.BaseballStatistics.ToListAsync();
         }
 
@@ -32,14 +38,14 @@ namespace StatService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BaseballStatistic>> GetBaseballStatistic(Guid id)
         {
-            var baseballStatistic = await _context.BaseballStatistics.FindAsync(id);
+            return await _logic.GetBaseballStatisticById(id);
+        }
 
-            if (baseballStatistic == null)
-            {
-                return NotFound();
-            }
-
-            return baseballStatistic;
+        // GET: api/BaseballStatistics/1/1
+        [HttpGet("{userId}/{gameId}")]
+        public async Task<ActionResult<BaseballStatistic>> GetBaseballGameStatistic(string userId, Guid gameId)
+        {
+            return await _logic.GetBaseballGameStatistic(userId, gameId);
         }
 
         // PUT: api/BaseballStatistics/5

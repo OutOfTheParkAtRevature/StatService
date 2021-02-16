@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Repository;
 
+
 namespace Service
 {
     public class Logic
@@ -31,6 +32,32 @@ namespace Service
          *
          *****************************************************************************************/
 
+        public async Task BuildPlayerGame(string playerId, Guid gameId, Guid statLineId)
+        {
+            PlayerGame playerGame = new PlayerGame()
+            {
+                UserID = playerId,
+                GameID = gameId,
+                StatLineID = statLineId
+            };
+
+            await _repo.PlayerGames.AddAsync(playerGame);
+            await _repo.CommitSave();
+        }
+
+        public async Task BuildTeamGame(string teamId, Guid gameId, Guid statLineId)
+        {
+            TeamGame teamGame = new TeamGame()
+            {
+                TeamID = teamId,
+                GameID = gameId,
+                StatLineID = statLineId
+            };
+
+            await _repo.TeamGames.AddAsync(teamGame);
+            await _repo.CommitSave();
+        }
+
         // CreateStatistic
         /// <summary>
         /// Creates a basketball statistic for a player. Statistic can be updated with
@@ -38,8 +65,9 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> CreateStatistic(BasketballStatistic basketballStatistic)
+        public async Task<BasketballStatistic> CreateStatistic(string playerId, Guid gameId, BasketballStatistic basketballStatistic)
         {
+            await BuildPlayerGame(playerId, gameId, basketballStatistic.StatLineID);
             return await _repo.CreateStatistic(basketballStatistic);
         }
 
@@ -48,8 +76,9 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> CreateStatistic(BaseballStatistic baseballStatistic)
+        public async Task<BaseballStatistic> CreateStatistic(string playerId, Guid gameId, BaseballStatistic baseballStatistic)
         {
+            await BuildPlayerGame(playerId, gameId, baseballStatistic.StatLineID);
             return await _repo.CreateStatistic(baseballStatistic);
         }
 
@@ -58,8 +87,9 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<FootBallStatistic> CreateStatistic(FootBallStatistic footballStatistic)
+        public async Task<FootBallStatistic> CreateStatistic(string playerId, Guid gameId, FootBallStatistic footballStatistic)
         {
+            await BuildPlayerGame(playerId, gameId, footballStatistic.StatLineID);
             return await _repo.CreateStatistic(footballStatistic);
         }
 
@@ -68,8 +98,9 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<GolfStatistic> CreateStatistic(GolfStatistic golfStatistic)
+        public async Task<GolfStatistic> CreateStatistic(string playerId, Guid gameId, GolfStatistic golfStatistic)
         {
+            await BuildPlayerGame(playerId, gameId, golfStatistic.StatLineID);
             return await _repo.CreateStatistic(golfStatistic);
         }
 
@@ -78,8 +109,9 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<HockeyStatistic> CreateStatistic(HockeyStatistic hockeyStatistic)
+        public async Task<HockeyStatistic> CreateStatistic(string playerId, Guid gameId, HockeyStatistic hockeyStatistic)
         {
+            await BuildPlayerGame(playerId, gameId, hockeyStatistic.StatLineID);
             return await _repo.CreateStatistic(hockeyStatistic);
         }
 
@@ -88,9 +120,27 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<SoccerStatistic> CreateStatistic(SoccerStatistic soccerStatistic)
+        public async Task<SoccerStatistic> CreateStatistic(string playerId, Guid gameId, SoccerStatistic soccerStatistic)
         {
+            await BuildPlayerGame(playerId, gameId, soccerStatistic.StatLineID);
             return await _repo.CreateStatistic(soccerStatistic);
+        }
+
+
+        /*****************************************************************************************/
+
+
+        // CreateTeamStatistic
+        /// <summary>
+        /// Creates a basketball statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> CreateTeamStatistic(string teamId, Guid gameId, BasketballStatistic basketballStatistic)
+        {
+            await BuildPlayerGame(teamId, gameId, basketballStatistic.StatLineID);
+            return await _repo.CreateStatistic(basketballStatistic);
         }
 
 
@@ -174,7 +224,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> GetBasketballGameStatistic(Guid userId, Guid gameId)
+        public async Task<BasketballStatistic> GetBasketballGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetBasketballGameStatistic(userId, gameId);
         }
@@ -185,7 +235,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> GetBaseballGameStatistic(Guid userId, Guid gameId)
+        public async Task<BaseballStatistic> GetBaseballGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetBaseballGameStatistic(userId, gameId);
         }
@@ -196,7 +246,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<FootBallStatistic> GetFootballGameStatistic(Guid userId, Guid gameId)
+        public async Task<FootBallStatistic> GetFootballGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetFootballGameStatistic(userId, gameId);
         }
@@ -207,7 +257,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<GolfStatistic> GetGolfGameStatistic(Guid userId, Guid gameId)
+        public async Task<GolfStatistic> GetGolfGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetGolfGameStatistic(userId, gameId);
         }
@@ -218,7 +268,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<HockeyStatistic> GetHockeyGameStatistic(Guid userId, Guid gameId)
+        public async Task<HockeyStatistic> GetHockeyGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetHockeyGameStatistic(userId, gameId);
         }
@@ -229,7 +279,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<SoccerStatistic> GetSoccerGameStatistic(Guid userId, Guid gameId)
+        public async Task<SoccerStatistic> GetSoccerGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetSoccerGameStatistic(userId, gameId);
         }
@@ -244,7 +294,7 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> GetPlayerOverallBasketballStatistic(Guid id)
+        public async Task<BasketballStatistic> GetPlayerOverallBasketballStatistic(string id)
         {
             // create basketball statistic to return
             BasketballStatistic basketballStatistic = new BasketballStatistic();
@@ -270,7 +320,7 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> GetPlayerOverallBaseballStatistic(Guid id)
+        public async Task<BaseballStatistic> GetPlayerOverallBaseballStatistic(string id)
         {
             // create baseball statistic to return
             BaseballStatistic baseballStatistic = new BaseballStatistic();
@@ -297,7 +347,7 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<FootBallStatistic> GetPlayerOverallFootballStatistic(Guid id)
+        public async Task<FootBallStatistic> GetPlayerOverallFootballStatistic(string id)
         {
             // create football statistic to return
             FootBallStatistic footballStatistic = new FootBallStatistic();
@@ -324,7 +374,7 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<GolfStatistic> GetPlayerOverallGolfStatistic(Guid id)
+        public async Task<GolfStatistic> GetPlayerOverallGolfStatistic(string id)
         {
             // create golf statistic to return
             GolfStatistic golfStatistic = new GolfStatistic();
@@ -353,7 +403,7 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<HockeyStatistic> GetPlayerOverallHockeyStatistic(Guid id)
+        public async Task<HockeyStatistic> GetPlayerOverallHockeyStatistic(string id)
         {
             // create hockey statistic to return
             HockeyStatistic hockeyStatistic = new HockeyStatistic();
@@ -381,7 +431,7 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<SoccerStatistic> GetPlayerOverallSoccerStatistic(Guid id)
+        public async Task<SoccerStatistic> GetPlayerOverallSoccerStatistic(string id)
         {
             // create soccer statistic to return
             SoccerStatistic soccerStatistic = new SoccerStatistic();

@@ -16,27 +16,27 @@ namespace StatService.Controllers
     public class StatServiceController : ControllerBase
     {
         static readonly HttpClient client = new HttpClient();
-        string uri = "https://localhost:44337/WeatherForecast";
-        public async Task<string> getUserId()
+        string uri = "https://localhost:44337/";
+
+        [HttpGet]
+        public async Task<string> GetUserId()
         {
-            string responseBody = " ";
             // Call asynchronous network methods in a try/catch block to handle exceptions.
             try
             {
-               // HttpResponseMessage response =  client.("http://www.contoso.com/");
-               // response.EnsureSuccessStatusCode();
-               // string responseBody = await response.Content.ReadAsStringAsync();
                 // Above three lines can be replaced with new helper method below
-                responseBody = await client.GetStringAsync(uri);
+                string responseBody = await client.GetStringAsync(uri);
 
                 Console.WriteLine(responseBody);
+                return responseBody;
             }
             catch (HttpRequestException e)
             {
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
             }
-            return responseBody;
+            // Something went wrong!
+            return null;
         }
 
 

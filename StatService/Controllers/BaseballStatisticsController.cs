@@ -38,19 +38,14 @@ namespace StatService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BaseballStatistic>> GetBaseballStatistic(Guid id)
         {
-            /*
-            
-            var baseballStatistic = await _context.BaseballStatistics.FindAsync(id);
-
-            if (baseballStatistic == null)
-            {
-                return NotFound();
-            }
-
-
-            return baseballStatistic;
-            */
             return await _logic.GetBaseballStatisticById(id);
+        }
+
+        // GET: api/BaseballStatistics/1/1
+        [HttpGet("{userId}/{gameId}")]
+        public async Task<ActionResult<BaseballStatistic>> GetBaseballGameStatistic(string userId, Guid gameId)
+        {
+            return await _logic.GetBaseballGameStatistic(userId, gameId);
         }
 
         // PUT: api/BaseballStatistics/5

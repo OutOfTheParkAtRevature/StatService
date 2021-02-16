@@ -12,7 +12,7 @@ namespace Models
     {
         [Key]
         [DisplayName("StatLine ID")]
-        public Guid StatLineID { get; set; }
+        public Guid StatLineID { get; set; } = new Guid();
         [DisplayName("Field Goals")]
         public int FGoals { get; set; }
         [DisplayName("Three Pointers")]

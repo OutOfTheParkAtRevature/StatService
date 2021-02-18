@@ -3,10 +3,10 @@ using System.ComponentModel;
 
 namespace Models
 {
-    public class PlayerGame
+    public class TeamGame
     {
-        [DisplayName("User ID")]
-        public string UserID { get; set; }
+        [DisplayName("Team ID")]
+        public string TeamID { get; set; }
         [DisplayName("Game ID")]
         public Guid GameID { get; set; }
         [DisplayName("Stat Line")]

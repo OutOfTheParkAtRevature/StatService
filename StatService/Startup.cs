@@ -37,26 +37,28 @@ namespace StatService
             services.AddControllers();
             services.AddDbContext<StatsContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("LocalDB")));
-
-            //Add cors with any origin
-            services.AddCors(options =>
-            {
-                options.AddPolicy("policy1",
-                    builder =>
-                    {
-                        builder.WithOrigins(
-                            "http://localhost:4200",
-                            "https://localhost:4200",
-                            "http://magic-match.azurewebsites.net",
-                            "https://magic-match.azurewebsites.net"
-                        )
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                    });
-            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StatService", Version = "v1" });
+            });
+            
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                };
             });
         }
 
@@ -73,9 +75,8 @@ namespace StatService
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            //Inject cors
-            app.UseCors("policy1");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

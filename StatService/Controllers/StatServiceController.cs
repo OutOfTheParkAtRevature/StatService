@@ -15,6 +15,7 @@ namespace StatService.Controllers
     [ApiController]
     public class StatServiceController : ControllerBase
     {
+        
         static readonly HttpClient client = new HttpClient();
         string uri = "https://localhost:44337/";
 
@@ -39,7 +40,7 @@ namespace StatService.Controllers
             return null;
         }
 
-
+        
 
 
         /*

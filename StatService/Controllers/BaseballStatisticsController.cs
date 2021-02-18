@@ -25,6 +25,13 @@ namespace StatService.Controllers
         }
 
         // GET: api/BaseballStatistics
+        // GetBaseballStatistics
+        /// <summary>
+        /// return list of all the baseball statistics with get mothod
+        /// 
+        /// </summary>
+        /// <param name="none"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BaseballStatistic>>> GetBaseballStatistics()
         {
@@ -35,6 +42,12 @@ namespace StatService.Controllers
         }
 
         // GET: api/BaseballStatistics/5
+        /// GetBaseballStatistics
+        /// <summary>
+        /// return the statistic that match the id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<BaseballStatistic>> GetBaseballStatistic(Guid id)
         {
@@ -50,6 +63,14 @@ namespace StatService.Controllers
 
         // PUT: api/BaseballStatistics/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// Put, BaseballStatistics
+        /// <summary>
+        /// return status success, error, or redirect
+        /// </summary>
+        /// <param name="id, baseballStatistic"></param>
+        /// <returns></returns>
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBaseballStatistic(Guid id, BaseballStatistic baseballStatistic)
         {
@@ -81,19 +102,36 @@ namespace StatService.Controllers
 
         // POST: api/BaseballStatistics
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// Post, BaseballStatistics
+        /// <summary>
+        /// return statLineId and baseballStatistic
+        /// </summary>
+        /// <param name="baseballStatistic"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<BaseballStatistic>> PostBaseballStatistic(BaseballStatistic baseballStatistic)
         {
+            /*
             _context.BaseballStatistics.Add(baseballStatistic);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBaseballStatistic", new { id = baseballStatistic.StatLineID }, baseballStatistic);
+            */
+            //calle logic CreateStatistic method
+            return await _logic.CreateStatistic(baseballStatistic);
         }
 
         // DELETE: api/BaseballStatistics/5
+        /// DELETE, BaseballStatistics
+        /// <summary>
+        /// return status response: success, error, or redirect
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBaseballStatistic(Guid id)
         {
+           // _logic.DeleteStatistic(id);
             var baseballStatistic = await _context.BaseballStatistics.FindAsync(id);
             if (baseballStatistic == null)
             {
@@ -106,6 +144,12 @@ namespace StatService.Controllers
             return NoContent();
         }
 
+        /// BaseballStatisticsExists
+        /// <summary>
+        /// return boolean value: true or false
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool BaseballStatisticExists(Guid id)
         {
             return _context.BaseballStatistics.Any(e => e.StatLineID == id);

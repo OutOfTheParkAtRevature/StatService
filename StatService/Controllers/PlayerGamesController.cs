@@ -46,17 +46,10 @@ namespace StatService.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PlayerGame>> GetPlayerGame(Guid id)
+        [HttpGet("{playerId}/{gameId}")]
+        public async Task<ActionResult<BaseballStatistic>> GetPlayerGame(string playerId, Guid gameId)
         {
-            var playerGame = await _context.PlayerGames.FindAsync(id);
-
-            if (playerGame == null)
-            {
-                return NotFound();
-            }
-
-            return playerGame;
+            return await _logic.GetBaseballGameStatistic(playerId, gameId);
         }
 
         // PUT: api/PlayerGames/5
@@ -107,26 +100,9 @@ namespace StatService.Controllers
         /// <param name="playerGame"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<PlayerGame>> PostPlayerGame(PlayerGame playerGame)
+        public async Task<ActionResult<BaseballStatistic>> PostPlayerGame(string playerId, Guid gameId, BaseballStatistic baseballStatistic)
         {
-            _context.PlayerGames.Add(playerGame);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (PlayerGameExists(playerGame.UserID))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetPlayerGame", new { id = playerGame.UserID }, playerGame);
+            return await _logic.CreateStatistic(playerId, gameId, baseballStatistic);
         }
 
         // DELETE: api/PlayerGames/5
@@ -159,7 +135,7 @@ namespace StatService.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private bool PlayerGameExists(Guid id)
+        private bool PlayerGameExists(string id)
         {
             return _context.PlayerGames.Any(e => e.UserID == id);
         }

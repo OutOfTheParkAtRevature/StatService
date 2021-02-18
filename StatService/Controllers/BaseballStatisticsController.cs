@@ -108,9 +108,9 @@ namespace StatService.Controllers
         /// </summary>
         /// <param name="baseballStatistic"></param>
         /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult<BaseballStatistic>> PostBaseballStatistic(BaseballStatistic baseballStatistic)
-        {
+        //[HttpPost]
+        //public async Task<ActionResult<BaseballStatistic>> PostBaseballStatistic(BaseballStatistic baseballStatistic)
+        //{
             /*
             _context.BaseballStatistics.Add(baseballStatistic);
             await _context.SaveChangesAsync();
@@ -118,8 +118,8 @@ namespace StatService.Controllers
             return CreatedAtAction("GetBaseballStatistic", new { id = baseballStatistic.StatLineID }, baseballStatistic);
             */
             //calle logic CreateStatistic method
-            return await _logic.CreateStatistic(baseballStatistic);
-        }
+            //return await _logic.CreateStatistic(baseballStatistic);
+        //}
 
         // DELETE: api/BaseballStatistics/5
         /// DELETE, BaseballStatistics

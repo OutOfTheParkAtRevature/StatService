@@ -139,8 +139,68 @@ namespace Service
         /// <returns></returns>
         public async Task<BasketballStatistic> CreateTeamStatistic(string teamId, Guid gameId, BasketballStatistic basketballStatistic)
         {
-            await BuildPlayerGame(teamId, gameId, basketballStatistic.StatLineID);
+            await BuildTeamGame(teamId, gameId, basketballStatistic.StatLineID);
             return await _repo.CreateStatistic(basketballStatistic);
+        }
+
+        /// <summary>
+        /// Creates a baseball statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> CreateTeamStatistic(string teamId, Guid gameId, BaseballStatistic baseballStatistic)
+        {
+            await BuildTeamGame(teamId, gameId, baseballStatistic.StatLineID);
+            return await _repo.CreateStatistic(baseballStatistic);
+        }
+
+        /// <summary>
+        /// Creates a football statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> CreateTeamStatistic(string teamId, Guid gameId, FootBallStatistic footballStatistic)
+        {
+            await BuildTeamGame(teamId, gameId, footballStatistic.StatLineID);
+            return await _repo.CreateStatistic(footballStatistic);
+        }
+
+        /// <summary>
+        /// Creates a golf statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> CreateTeamStatistic(string teamId, Guid gameId, GolfStatistic golfStatistic)
+        {
+            await BuildTeamGame(teamId, gameId, golfStatistic.StatLineID);
+            return await _repo.CreateStatistic(golfStatistic);
+        }
+
+        /// <summary>
+        /// Creates a hockey statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> CreateTeamStatistic(string teamId, Guid gameId, HockeyStatistic hockeyStatistic)
+        {
+            await BuildTeamGame(teamId, gameId, hockeyStatistic.StatLineID);
+            return await _repo.CreateStatistic(hockeyStatistic);
+        }
+
+        /// <summary>
+        /// Creates a  statistic for a player. Statistic can be updated with
+        /// UpdateStatistic method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> CreateTeamStatistic(string teamId, Guid gameId, SoccerStatistic soccerStatistic)
+        {
+            await BuildTeamGame(teamId, gameId, soccerStatistic.StatLineID);
+            return await _repo.CreateStatistic(soccerStatistic);
         }
 
 
@@ -324,10 +384,13 @@ namespace Service
         {
             // create baseball statistic to return
             BaseballStatistic baseballStatistic = new BaseballStatistic();
+
             // get list of all stats with userId filtering result
-            IEnumerable<BaseballStatistic> baseballStatisticList = await _repo.GetBaseballStatisticByPlayerId(id);
+            IEnumerable<BaseballStatistic> baseballStatisticEnumerable = await _repo.GetBaseballStatisticByPlayerId(id);
+            List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
+
             // add all stats together
-            foreach (BaseballStatistic b in baseballStatisticList)
+            foreach (BaseballStatistic b in baseballStatisticEnumerable)
             {
                 baseballStatistic.BattingAve += b.BattingAve;
                 baseballStatistic.ERA += b.ERA;
@@ -337,7 +400,13 @@ namespace Service
                 baseballStatistic.Saves += b.Saves;
                 baseballStatistic.Steals += b.Steals;
                 baseballStatistic.StrikeOuts += b.StrikeOuts;
+                baseballStatisticList.Add(b);
             }
+
+            // correcting averages
+            baseballStatistic.BattingAve /= baseballStatisticList.Count;
+            baseballStatistic.ERA /= baseballStatisticList.Count;
+
             // return total
             return baseballStatistic;
         }

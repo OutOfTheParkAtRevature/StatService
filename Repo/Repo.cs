@@ -316,13 +316,13 @@ namespace Repository
             List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
             List<Guid> statLineIdList = new List<Guid>();
             // get all stat line ids where player id matches
-            IEnumerable<PlayerGame> playerGameEnumerable = PlayerGames.Where(x => x.UserID == id);
+            List<PlayerGame> playerGameEnumerable = await PlayerGames.Where(x => x.UserID == id).ToListAsync();
             // grab stat lines from player games
             foreach (PlayerGame p in playerGameEnumerable)
             {
                 statLineIdList.Add(p.StatLineID);
             }
-            // grab basketball stats using that list
+            // grab baseball stats using that list
             foreach (Guid s in statLineIdList)
             {
                 // add stats where stat line id matches

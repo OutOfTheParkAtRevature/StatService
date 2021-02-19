@@ -1,10 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
     public class PlayerGame
     {
+        [Key]
         [DisplayName("User ID")]
         public string UserID { get; set; }
         [DisplayName("Game ID")]

@@ -33,6 +33,8 @@ namespace Repository
         {
             modelBuilder.Entity<PlayerGame>()
                 .HasKey(p => new { p.UserID, p.GameID });
+            modelBuilder.Entity<TeamGame>()
+                .HasKey(p => new { p.TeamID, p.GameID });
         }
     }
 }

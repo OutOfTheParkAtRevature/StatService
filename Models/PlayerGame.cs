@@ -6,7 +6,6 @@ namespace Models
 {
     public class PlayerGame
     {
-        [Key]
         [DisplayName("User ID")]
         public string UserID { get; set; }
         [DisplayName("Game ID")]

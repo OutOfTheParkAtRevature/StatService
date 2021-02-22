@@ -310,6 +310,8 @@ namespace Service
                 basketballStatistic.Rebounds += b.Rebounds;
                 basketballStatistic.Steals += b.Steals;
                 basketballStatistic.Turnovers += b.Turnovers;
+                basketballStatistic.ThreePts += b.ThreePts;
+                basketballStatistic.PossessionTime += b.PossessionTime;
             }
             // return total
             return basketballStatistic;

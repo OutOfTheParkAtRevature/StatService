@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repo\Repository.csproj", "{D2C552D7-0242-4009-A0F9-F7E24D5BBD91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Tests", "Logic.Tests\Logic.Tests.csproj", "{AE91DFEB-D66C-4B8B-8CEE-67F65BA8F790}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Tests", "Logic.Tests\Service.Tests.csproj", "{AE91DFEB-D66C-4B8B-8CEE-67F65BA8F790}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models.Tests", "Models.Tests\Models.Tests.csproj", "{12A32BBC-B543-4A78-BA19-59144E166E52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models.Tests", "Models.Tests\Models.Tests.csproj", "{12A32BBC-B543-4A78-BA19-59144E166E52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repo.Tests", "Repo.Tests\Repo.Tests.csproj", "{CBC65A92-0C8D-49C2-B878-B283A0B0956D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests", "Repo.Tests\Repository.Tests.csproj", "{CBC65A92-0C8D-49C2-B878-B283A0B0956D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatService.Tests", "StatService.Tests\StatService.Tests.csproj", "{14FDC027-64E3-4E21-9681-80366A780C04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatService.Tests", "StatService.Tests\StatService.Tests.csproj", "{14FDC027-64E3-4E21-9681-80366A780C04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

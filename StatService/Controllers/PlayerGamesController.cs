@@ -33,49 +33,49 @@ namespace StatService.Controllers
         }
 
         // GET: api/PlayerGames/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PlayerGame>> GetPlayerGame(Guid id)
+        [HttpGet("{userId}/{gameId}")]
+        public async Task<ActionResult<PlayerGameStatDto>> GetPlayerGame(Guid userId, Guid gameId)
         {
-            var playerGame = await _context.PlayerGames.FindAsync(id);
-
+            var playerGame = await _context.PlayerGames.FirstOrDefaultAsync(x=>x.UserID == userId && x.GameID == gameId);
             if (playerGame == null)
             {
                 return NotFound();
             }
-
-            return playerGame;
+            BaseballStatistic bs = await _logic.GetBaseballStatisticById(playerGame.StatLineID);
+            PlayerGameStatDto ps = new PlayerGameStatDto { playerId = userId, gameId = gameId, baseballStat = bs };
+            return ps;
         }
 
-        // PUT: api/PlayerGames/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayerGame(Guid id, PlayerGame playerGame)
-        {
-            if (id != playerGame.UserID)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/PlayerGames/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutPlayerGame(Guid id, PlayerGame playerGame)
+        //{
+        //    if (id != playerGame.UserID)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(playerGame).State = EntityState.Modified;
+        //    _context.Entry(playerGame).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlayerGameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PlayerGameExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/PlayerGames
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -101,25 +101,25 @@ namespace StatService.Controllers
             //}
         }
 
-        // DELETE: api/PlayerGames/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlayerGame(string id)
-        {
-            var playerGame = await _context.PlayerGames.FindAsync(id);
-            if (playerGame == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/PlayerGames/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeletePlayerGame(string id)
+        //{
+        //    var playerGame = await _context.PlayerGames.FindAsync(id);
+        //    if (playerGame == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.PlayerGames.Remove(playerGame);
-            await _context.SaveChangesAsync();
+        //    _context.PlayerGames.Remove(playerGame);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
-        private bool PlayerGameExists(Guid id)
-        {
-            return _context.PlayerGames.Any(e => e.UserID == id);
-        }
+        //private bool PlayerGameExists(Guid id)
+        //{
+        //    return _context.PlayerGames.Any(e => e.UserID == id);
+        //}
     }
 }

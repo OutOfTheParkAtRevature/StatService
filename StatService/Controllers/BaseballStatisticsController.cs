@@ -35,10 +35,16 @@ namespace StatService.Controllers
         }
 
         // GET: api/BaseballStatistics/5
+        /// <summary>
+        /// Summarizes player statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseballStatistic>> GetBaseballStatistic(Guid id)
+        public async Task<ActionResult<BaseballStatistic>> GetBaseballStatistic(string id)
         {
-            return await _logic.GetBaseballStatisticById(id);
+            return  await _logic.GetPlayerOverallBaseballStatistic(id);
+            //return await _logic.GetBaseballStatisticById(id);
         }
 
         // GET: api/BaseballStatistics/1/1

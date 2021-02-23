@@ -54,4 +54,3 @@ spec:
           serviceName: stats-service-deployment
           servicePort: 80
         path: /stats(/|$)(.*)
-

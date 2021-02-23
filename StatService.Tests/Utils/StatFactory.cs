@@ -1,7 +1,4 @@
-using System;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +7,8 @@ using Microsoft.Extensions.Logging;
 
 using Repository;
 
-namespace StatService.Tests.Utils {
+namespace StatService.Tests.Utils
+{
     public class StatFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class {
         protected override void ConfigureWebHost(IWebHostBuilder builder) {
             builder.UseContentRoot(".");

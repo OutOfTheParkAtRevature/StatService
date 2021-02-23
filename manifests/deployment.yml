@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stat-service
+  name: stats-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: stat-service
+      app: stats-service
   strategy:
     rollingUpdate:
       maxSurge: 3
@@ -15,42 +15,42 @@ spec:
   template:
     metadata:
       labels:
-        app: stat-service
+        app: stats-service
     spec:
       containers:
-        - name: stat-service
-          image: outofthepark15226.azurecr.io/stat-service
+        - name: stats-service
+          image: outofthepark15226.azurecr.io/stats-service
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-              name: stat-http
+              name: stats-http
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: stat-service-deployment
+  name: stats-service-deployment
 spec:
   ports:
-    - name: stat-service
+    - name: stats-service
       port: 80
-      targetPort: stat-http
+      targetPort: stats-http
   selector:
-    app: stat-service
+    app: stats-service
   type: LoadBalancer
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: stat-service-ingress
+  name: stats-service-ingress
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: stat-service.1c50b018f5784721b39b.eastus.aksapp.io
+  - host: stats-service.1c50b018f5784721b39b.eastus.aksapp.io
     http:
       paths:
       - pathType: Prefix
         backend:
-          serviceName: stat-service-deployment
+          serviceName: stats-service-deployment
           servicePort: 80
-        path: /stat(/|$)(.*)
+        path: /stats(/|$)(.*)

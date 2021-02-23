@@ -189,7 +189,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> GetBasketballGameStatistic(Guid userId, Guid gameId)
+        public async Task<BasketballStatistic> GetBasketballGameStatistic(string userId, Guid gameId)
         {
             // Get stat line id
             Guid statLineId = PlayerGames.FirstOrDefaultAsync(x=>x.UserID == userId && x.GameID == gameId).Result.StatLineID;
@@ -204,7 +204,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> GetBaseballGameStatistic(Guid userId, Guid gameId)
+        public async Task<BaseballStatistic> GetBaseballGameStatistic(string userId, Guid gameId)
         {
             // Get stat line id
             Guid statLineId = PlayerGames.FirstOrDefaultAsync(x => x.UserID == userId && x.GameID == gameId).Result.StatLineID;
@@ -219,7 +219,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public async Task<FootBallStatistic> GetFootballGameStatistic(Guid userId, Guid gameId)
+        public async Task<FootBallStatistic> GetFootballGameStatistic(string userId, Guid gameId)
         {
             // Get stat line id
             Guid statLineId = PlayerGames.FirstOrDefaultAsync(x => x.UserID == userId && x.GameID == gameId).Result.StatLineID;
@@ -234,7 +234,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public async Task<GolfStatistic> GetGolfGameStatistic(Guid userId, Guid gameId)
+        public async Task<GolfStatistic> GetGolfGameStatistic(string userId, Guid gameId)
         {
             // Get stat line id
             Guid statLineId = PlayerGames.FirstOrDefaultAsync(x => x.UserID == userId && x.GameID == gameId).Result.StatLineID;
@@ -249,7 +249,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public async Task<HockeyStatistic> GetHockeyGameStatistic(Guid userId, Guid gameId)
+        public async Task<HockeyStatistic> GetHockeyGameStatistic(string userId, Guid gameId)
         {
             // Get stat line id
             Guid statLineId = PlayerGames.FirstOrDefaultAsync(x => x.UserID == userId && x.GameID == gameId).Result.StatLineID;
@@ -264,7 +264,7 @@ namespace Repository
         /// <param name="userId"></param>
         /// <param name="gameId"></param>
         /// <returns></returns>
-        public async Task<SoccerStatistic> GetSoccerGameStatistic(Guid userId, Guid gameId)
+        public async Task<SoccerStatistic> GetSoccerGameStatistic(string userId, Guid gameId)
         {
             // Get stat line id
             Guid statLineId = PlayerGames.FirstOrDefaultAsync(x => x.UserID == userId && x.GameID == gameId).Result.StatLineID;
@@ -282,7 +282,7 @@ namespace Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatisticByPlayerId(Guid id)
+        public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatisticByPlayerId(string id)
         {
             // some generic setup
             List<BasketballStatistic> basketballStatisticList = new List<BasketballStatistic>();
@@ -309,7 +309,7 @@ namespace Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<BaseballStatistic>> GetBaseballStatisticByPlayerId(Guid id)
+        public async Task<IEnumerable<BaseballStatistic>> GetBaseballStatisticByPlayerId(string id)
         {
             // some generic setup
             List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
@@ -336,7 +336,7 @@ namespace Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<FootBallStatistic>> GetFootballStatisticByPlayerId(Guid id)
+        public async Task<IEnumerable<FootBallStatistic>> GetFootballStatisticByPlayerId(string id)
         {
             // some generic setup
             List<FootBallStatistic> footballStatisticList = new List<FootBallStatistic>();
@@ -363,7 +363,7 @@ namespace Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<GolfStatistic>> GetGolfStatisticByPlayerId(Guid id)
+        public async Task<IEnumerable<GolfStatistic>> GetGolfStatisticByPlayerId(string id)
         {
             // some generic setup
             List<GolfStatistic> golfStatisticList = new List<GolfStatistic>();
@@ -390,7 +390,7 @@ namespace Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<HockeyStatistic>> GetHockeyStatisticByPlayerId(Guid id)
+        public async Task<IEnumerable<HockeyStatistic>> GetHockeyStatisticByPlayerId(string id)
         {
             // some generic setup
             List<HockeyStatistic> hockeyStatisticList = new List<HockeyStatistic>();
@@ -417,7 +417,7 @@ namespace Repository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<SoccerStatistic>> GetSoccerStatisticByPlayerId(Guid id)
+        public async Task<IEnumerable<SoccerStatistic>> GetSoccerStatisticByPlayerId(string id)
         {
             // some generic setup
             List<SoccerStatistic> soccerStatisticList = new List<SoccerStatistic>();

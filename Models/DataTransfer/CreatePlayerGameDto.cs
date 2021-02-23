@@ -1,8 +1,10 @@
-﻿namespace Models.DataTransfer
+﻿using System;
+
+namespace Models.DataTransfer
 {
     public class CreatePlayerGameDto
     {
-        public Guid playerId { get; set; }
+        public string playerId { get; set; }
         public Guid gameId { get; set; }
         public BaseballStatistic BaseballStatistic { get; set; }
 

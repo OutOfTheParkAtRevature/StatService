@@ -183,19 +183,19 @@ namespace Models.Tests {
         /// <summary>
         /// Makes sure TeamGame model works with valid data
         /// </summary>
-        [Fact]
-        public void ValidateTeamGame()
-        {
-            var game = new TeamGame()
-            {
-                StatLineID = Guid.NewGuid(),
-                GameID = Guid.NewGuid(),
-                TeamID = "tigers"
-            };
+        //[Fact]
+        //public void ValidateTeamGame()
+        //{
+        //    var game = new TeamGame()
+        //    {
+        //        StatLineID = Guid.NewGuid(),
+        //        GameID = Guid.NewGuid(),
+        //        TeamID = "tigers"
+        //    };
 
-            var results = ValidateModel(game);
-            Assert.True(results.Count == 0);
-        }
+        //    var results = ValidateModel(game);
+        //    Assert.True(results.Count == 0);
+        //}
 
 
     }

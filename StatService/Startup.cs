@@ -1,32 +1,25 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
 using Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace StatService
 {
     public class Startup
     {
-        public IConfiguration _configuration { get; }
+
 
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -44,7 +37,7 @@ namespace StatService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StatService", Version = "v1" });
             });
             
-            services.AddDbContext<StatsContext>(options => options.UseSqlServer(_configuration.GetConnectionString("LocalDB")));
+            services.AddDbContext<StatsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LocalDB")));
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
             var jwtSettings = Configuration.GetSection("JwtSettings");

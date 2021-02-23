@@ -22,11 +22,11 @@ namespace StatService
 {
     public class Startup
     {
-        public IConfiguration _configuration { get; }
+
 
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -44,7 +44,7 @@ namespace StatService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StatService", Version = "v1" });
             });
             
-            services.AddDbContext<StatsContext>(options => options.UseSqlServer(_configuration.GetConnectionString("LocalDB")));
+            services.AddDbContext<StatsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LocalDB")));
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
             var jwtSettings = Configuration.GetSection("JwtSettings");

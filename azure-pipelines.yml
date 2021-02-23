@@ -5,12 +5,12 @@ pr:
 - staging
 
 variables:
-  statsRepository: 'stats-service'
-  tag: '$(Build.BuildId)'
-  imagePullSecret: 'stats'
+  statRepository: 'stat-service'
+  tag: 'latest'
+  imagePullSecret: 'stat-service'
 
 stages:
-  - stage:
+  - stage: 'Analyze'
     displayName: Analyze
     jobs:
       - job: analyze
@@ -26,11 +26,11 @@ stages:
             inputs:
               SonarCloud: 'sonarcloud connection'
               organization: 121420-dotnet-sonarcloud
-              projectKey: OutOfTheParkStatsService
-              projectName: OutOfTheParkStatsService
+              projectKey: OutOfTheParkStatService
+              projectName: OutOfTheParkStatService
               scannerMode: MSBuild
               extraProperties: |
-                sonar.exclusions=**/obj/**,**/lib/**,**/*.dll
+                sonar.exclusions=**/obj/**,**/lib/**,**/*.dll,**/Startup.cs,**/Program.cs,**/Migrations/**
           - script: dotnet build --configuration Release
             displayName: Analyze Build
           - task: DotNetCoreCLI@2
@@ -47,26 +47,25 @@ stages:
             displayName: Run Code Analysis
           - task: SonarCloudPublish@1
             displayName: Publish Code Analysis
-
   - stage: 'Build'
     displayName: Build and push
     jobs:
-      - job: register
+      - job: Build
         pool:
           vmImage: ubuntu-latest
         steps:
-           - task: Docker@2
-             inputs:
+          - task: Docker@2
+            inputs:
               command: buildAndPush
               buildContext: $(Build.Repository.LocalPath)
-              repository: $(statsRepository)
+              repository: $(statRepository)
               dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
               containerRegistry: 'Container Registry Connection'
               tags: |
                 $(tag)
           
-           - publish: '$(Build.SourcesDirectory)/manifests'
-             artifact: manifests
+          - publish: '$(Build.SourcesDirectory)/manifests'
+            artifact: manifests
   - stage: 'Deploy'
     displayName: 'Deploy the containers'
     dependsOn: Build
@@ -85,10 +84,10 @@ stages:
             - download: current
               artifact: manifests
 
-
             - task: KubectlInstaller@0
               inputs:
                 kubectlVersion: 'latest'
+                
             - task: Kubernetes@1
               inputs:
                 connectionType: 'Kubernetes Service Connection'
@@ -116,8 +115,7 @@ stages:
                 imagePullSecrets: |
                   $(imagePullSecret)
                 containers: |
-                  $(RegistryName)/$(statsRepository):$(tag)
-            
+                  $(RegistryName)/$(statRepository):$(tag)
 
             - task: Kubernetes@1
               inputs:

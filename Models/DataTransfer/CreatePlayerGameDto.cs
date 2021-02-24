@@ -6,7 +6,7 @@ namespace Models.DataTransfer
     {
         public string playerId { get; set; }
         public Guid gameId { get; set; }
-        public BaseballStatistic BaseballStatistic { get; set; }
+        public BaseballStatistic baseballStatistic { get; set; }
 
     }
 }

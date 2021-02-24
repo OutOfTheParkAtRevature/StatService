@@ -140,9 +140,9 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> CreateTeamStatistic(string teamId, Guid gameId, BasketballStatistic basketballStatistic)
+        public async Task<BasketballStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, BasketballStatistic basketballStatistic)
         {
-            await BuildPlayerGame(teamId, gameId, basketballStatistic.StatLineID);
+            await BuildTeamGame(teamId, gameId, basketballStatistic.StatLineID);
             return await _repo.CreateStatistic(basketballStatistic);
         }
 

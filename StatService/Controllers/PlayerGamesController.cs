@@ -82,7 +82,7 @@ namespace StatService.Controllers
         public async Task<ActionResult<PlayerGameStatDto>> PostPlayerGame([FromBody]CreatePlayerGameDto createPlayerGameDto)
         {
 
-            return Ok(await _logic.CreateStatistic(createPlayerGameDto.playerId, createPlayerGameDto.gameId, createPlayerGameDto.BaseballStatistic));
+            return Ok(await _logic.CreateStatistic(createPlayerGameDto.playerId, createPlayerGameDto.gameId, createPlayerGameDto.baseballStatistic));
             //try
             //{
             //    await _context.SaveChangesAsync();

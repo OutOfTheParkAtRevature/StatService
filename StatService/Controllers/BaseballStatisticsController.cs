@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -106,6 +107,19 @@ namespace StatService.Controllers
         private bool BaseballStatisticExists(Guid id)
         {
             return _context.BaseballStatistics.Any(e => e.StatLineID == id);
+        }
+
+        [HttpGet("player")]
+        public async Task<IActionResult> GetAllPlayerOverallStats()
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return Ok(await _logic.GetAllPlayerOverallStatistics(token));
+        }
+        [HttpGet("player/{id}")]
+        public async Task<IActionResult> GetOverallStatsForPlayer(string id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return Ok(await _logic.GetPlayerOverallBaseballStatistic(id, token));
         }
     }
 }

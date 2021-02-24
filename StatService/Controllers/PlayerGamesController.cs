@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -26,23 +27,18 @@ namespace StatService.Controllers
 
         // GET: api/PlayerGames
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PlayerGame>>> GetPlayerGames()
+        public async Task<ActionResult<IEnumerable<PlayerGameStatDto>>> GetPlayerGames()
         {
-            return await _context.PlayerGames.ToListAsync();
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return await _logic.GetAllPlayerGameStats(token);
         }
 
         // GET: api/PlayerGames/5
         [HttpGet("{userId}/{gameId}")]
         public async Task<ActionResult<PlayerGameStatDto>> GetPlayerGame(string userId, Guid gameId)
         {
-            var playerGame = await _context.PlayerGames.FirstOrDefaultAsync(x=>x.UserID == userId && x.GameID == gameId);
-            if (playerGame == null)
-            {
-                return NotFound();
-            }
-            BaseballStatistic bs = await _logic.GetBaseballStatisticById(playerGame.StatLineID);
-            PlayerGameStatDto ps = new PlayerGameStatDto { playerId = userId, gameId = gameId, baseballStat = bs };
-            return ps;
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return await _logic.GetPlayerGameStat(userId, gameId, token);
         }
 
         //// PUT: api/PlayerGames/5

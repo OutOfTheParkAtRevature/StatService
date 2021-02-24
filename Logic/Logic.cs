@@ -140,7 +140,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BasketballStatistic> CreateTeamStatistic(string teamId, Guid gameId, BasketballStatistic basketballStatistic)
+        public async Task<BasketballStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, BasketballStatistic basketballStatistic)
         {
             await BuildTeamGame(teamId, gameId, basketballStatistic.StatLineID);
             return await _repo.CreateStatistic(basketballStatistic);
@@ -152,7 +152,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> CreateTeamStatistic(string teamId, Guid gameId, BaseballStatistic baseballStatistic)
+        public async Task<BaseballStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, BaseballStatistic baseballStatistic)
         {
             await BuildTeamGame(teamId, gameId, baseballStatistic.StatLineID);
             return await _repo.CreateStatistic(baseballStatistic);
@@ -164,7 +164,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<FootBallStatistic> CreateTeamStatistic(string teamId, Guid gameId, FootBallStatistic footballStatistic)
+        public async Task<FootBallStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, FootBallStatistic footballStatistic)
         {
             await BuildTeamGame(teamId, gameId, footballStatistic.StatLineID);
             return await _repo.CreateStatistic(footballStatistic);
@@ -176,7 +176,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<GolfStatistic> CreateTeamStatistic(string teamId, Guid gameId, GolfStatistic golfStatistic)
+        public async Task<GolfStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, GolfStatistic golfStatistic)
         {
             await BuildTeamGame(teamId, gameId, golfStatistic.StatLineID);
             return await _repo.CreateStatistic(golfStatistic);
@@ -188,7 +188,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<HockeyStatistic> CreateTeamStatistic(string teamId, Guid gameId, HockeyStatistic hockeyStatistic)
+        public async Task<HockeyStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, HockeyStatistic hockeyStatistic)
         {
             await BuildTeamGame(teamId, gameId, hockeyStatistic.StatLineID);
             return await _repo.CreateStatistic(hockeyStatistic);
@@ -200,7 +200,7 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<SoccerStatistic> CreateTeamStatistic(string teamId, Guid gameId, SoccerStatistic soccerStatistic)
+        public async Task<SoccerStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, SoccerStatistic soccerStatistic)
         {
             await BuildTeamGame(teamId, gameId, soccerStatistic.StatLineID);
             return await _repo.CreateStatistic(soccerStatistic);
@@ -345,6 +345,77 @@ namespace Service
         public async Task<SoccerStatistic> GetSoccerGameStatistic(string userId, Guid gameId)
         {
             return await _repo.GetSoccerGameStatistic(userId, gameId);
+        }
+
+
+        /*****************************************************************************************/
+
+
+        // GetSportGameStatistic
+        /// <summary>
+        /// Takes a game id and a team id  to retrieve statline from TeamGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetBasketballGameStatistic(Guid teamId, Guid gameId)
+        {
+            return await _repo.GetBasketballGameStatistic(teamId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a team id  to retrieve statline from TeamGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> GetBaseballGameStatistic(Guid teamId, Guid gameId)
+        {
+            return await _repo.GetBaseballGameStatistic(teamId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a team id  to retrieve statline from TeamGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> GetFootballGameStatistic(Guid teamId, Guid gameId)
+        {
+            return await _repo.GetFootballGameStatistic(teamId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a team id  to retrieve statline from TeamGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> GetGolfGameStatistic(Guid teamId, Guid gameId)
+        {
+            return await _repo.GetGolfGameStatistic(teamId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a team id  to retrieve statline from TeamGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> GetHockeyGameStatistic(Guid teamId, Guid gameId)
+        {
+            return await _repo.GetHockeyGameStatistic(teamId, gameId);
+        }
+
+        /// <summary>
+        /// Takes a game id and a team id  to retrieve statline from TeamGame db set. Returns 
+        /// stats from that game.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> GetSoccerGameStatistic(Guid teamId, Guid gameId)
+        {
+            return await _repo.GetSoccerGameStatistic(teamId, gameId);
         }
 
 

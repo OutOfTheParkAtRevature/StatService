@@ -45,7 +45,7 @@ namespace StatService.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{teamId}/{gameId}")]
-        public async Task<ActionResult<BaseballStatistic>> GetTeamGame(string teamId, Guid gameId)
+        public async Task<ActionResult<BaseballStatistic>> GetTeamGame(Guid teamId, Guid gameId)
         {
             return await _logic.GetBaseballGameStatistic(teamId, gameId);
         }
@@ -60,7 +60,7 @@ namespace StatService.Controllers
         /// <param name="id, playerGame"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTeamGame(string id, TeamGame teamGame)
+        public async Task<IActionResult> PutTeamGame(Guid id, TeamGame teamGame)
         {
             if (id != teamGame.TeamID)
             {
@@ -98,7 +98,7 @@ namespace StatService.Controllers
         /// <param name="playerGame"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<BaseballStatistic>> PostTeamGame(string teamId, Guid gameId, BaseballStatistic baseballStatistic)
+        public async Task<ActionResult<BaseballStatistic>> PostTeamGame(Guid teamId, Guid gameId, BaseballStatistic baseballStatistic)
         {
             return await _logic.CreateTeamStatistic(teamId, gameId, baseballStatistic);
         }
@@ -112,7 +112,7 @@ namespace StatService.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTeamGame(string id)
+        public async Task<IActionResult> DeleteTeamGame(Guid id)
         {
             var teamGame = await _context.TeamGames.FindAsync(id);
             if (teamGame == null)
@@ -133,7 +133,7 @@ namespace StatService.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private bool TeamGameExists(string id)
+        private bool TeamGameExists(Guid id)
         {
             return _context.TeamGames.Any(e => e.TeamID == id);
         }

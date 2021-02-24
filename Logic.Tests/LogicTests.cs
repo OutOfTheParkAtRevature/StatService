@@ -1200,7 +1200,7 @@ namespace Service.Tests
 
             var createBaseball = new BaseballStatistic() { StatLineID = Guid.NewGuid() };
             var baseball = await logic.CreateStatistic(player.UserID, player.GameID, createBaseball);
-            Assert.Equal(baseball.StatLineID, createBaseball.StatLineID);
+            Assert.Equal(baseball.baseballStat.StatLineID, createBaseball.StatLineID);
 
             var createFootball = new FootBallStatistic() { StatLineID = Guid.NewGuid() };
             var football = await logic.CreateStatistic(player.UserID, player.GameID, createFootball);
@@ -1234,9 +1234,9 @@ namespace Service.Tests
             Assert.NotEqual(0, basketball.Assists);
             
             var baseball = await logic.CreateStatistic(player.UserID, player.GameID, new BaseballStatistic() { StatLineID = Guid.NewGuid() });
-            baseball.BattingAve = 1;
-            baseball = await logic.UpdateStatistic(baseball);
-            Assert.NotEqual(0, baseball.BattingAve);
+            baseball.baseballStat.BattingAve = 1;
+            var baseballStat = await logic.UpdateStatistic(baseball.baseballStat);
+            Assert.NotEqual(0, baseball.baseballStat.BattingAve);
 
             var football = await logic.CreateStatistic(player.UserID, player.GameID, new FootBallStatistic() { StatLineID = Guid.NewGuid() });
             football.FirstDownCons = 1;
@@ -1259,7 +1259,8 @@ namespace Service.Tests
             Assert.NotEqual(0, soccer.CornerKicks);
         }
         [Fact]
-        public async void TestDeleteStatistic() {
+        public async void TestDeleteStatistic()
+        {
             var opt = new DbContextOptionsBuilder<StatsContext>()
                 .UseInMemoryDatabase("delete-stats")
                 .Options;
@@ -1274,9 +1275,9 @@ namespace Service.Tests
             Assert.Null(basketball);
 
             var baseball = await logic.CreateStatistic(player.UserID, player.GameID, new BaseballStatistic() { StatLineID = Guid.NewGuid() });
-            await logic.DeleteStatistic(baseball);
-            baseball = await logic.GetBaseballStatisticById(baseball.StatLineID);
-            Assert.Null(baseball);
+            await logic.DeleteStatistic(baseball.baseballStat);
+            var baseballStat = await logic.GetBaseballStatisticById(baseball.baseballStat.StatLineID);
+            Assert.Null(baseballStat);
 
             var football = await logic.CreateStatistic(player.UserID, player.GameID, new FootBallStatistic() { StatLineID = Guid.NewGuid() });
             await logic.DeleteStatistic(football);
@@ -1297,6 +1298,7 @@ namespace Service.Tests
             await logic.DeleteStatistic(soccer);
             soccer = await logic.GetSoccerStatisticById(soccer.StatLineID);
             Assert.Null(soccer);
+        }
         public async void TestForGetPlayerOverallFoobballStatistic()
         {
             var options = new DbContextOptionsBuilder<StatsContext>()

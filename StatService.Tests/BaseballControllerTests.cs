@@ -233,6 +233,8 @@ namespace StatService.Tests
                 Repo r = new Repo(context, new NullLogger<Repo>());
                 Logic l = new Logic(r, new NullLogger<Repo>());
                 BaseballStatisticsController controller = new BaseballStatisticsController(context, l);
+                var playerId = "";
+                var gameId = new Guid();
                 var baseballStatistics = new BaseballStatistic()
                 {
                     StatLineID = Guid.NewGuid(),
@@ -245,7 +247,7 @@ namespace StatService.Tests
                     StrikeOuts = 32,
                     Saves = 25
                 };
-                var sportStatistic = await controller.PostBaseballStatistic(baseballStatistics);
+                var sportStatistic = await controller.PostBaseballStatistic(playerId, gameId, baseballStatistics);
                 Assert.IsAssignableFrom<CreatedAtActionResult>(sportStatistic.Result as CreatedAtActionResult);
             }
         }

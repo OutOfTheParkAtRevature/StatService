@@ -276,6 +276,101 @@ namespace Repository
         /*****************************************************************************************/
 
 
+        // GetSportGameStatistic
+        /// <summary>
+        /// Takes team id and game id, then gets the specified team's statistics for a single 
+        /// game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetBasketballGameStatistic(Guid teamId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = TeamGames.FirstOrDefaultAsync(x => x.TeamID == teamId && x.GameID == gameId).Result.StatLineID;
+            // Return stats for that game.
+            return await BasketballStatistics.FindAsync(statLineId);
+        }
+
+        /// <summary>
+        /// Takes team id and game id, then gets the specified team's statistics for a single 
+        /// game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> GetBaseballGameStatistic(Guid teamId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = TeamGames.FirstOrDefaultAsync(x => x.TeamID == teamId && x.GameID == gameId).Result.StatLineID;
+            // Return stats for that game.
+            return await BaseballStatistics.FindAsync(statLineId);
+        }
+
+        /// <summary>
+        /// Takes team id and game id, then gets the specified team's statistics for a single 
+        /// game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> GetFootballGameStatistic(Guid teamId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = TeamGames.FirstOrDefaultAsync(x => x.TeamID == teamId && x.GameID == gameId).Result.StatLineID;
+            // Return stats for that game.
+            return await FootballStatistics.FindAsync(statLineId);
+        }
+
+        /// <summary>
+        /// Takes team id and game id, then gets the specified team's statistics for a single 
+        /// game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> GetGolfGameStatistic(Guid teamId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = TeamGames.FirstOrDefaultAsync(x => x.TeamID == teamId && x.GameID == gameId).Result.StatLineID;
+            // Return stats for that game.
+            return await GolfStatistics.FindAsync(statLineId);
+        }
+
+        /// <summary>
+        /// Takes team id and game id, then gets the specified team's statistics for a single 
+        /// game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> GetHockeyGameStatistic(Guid teamId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = TeamGames.FirstOrDefaultAsync(x => x.TeamID == teamId && x.GameID == gameId).Result.StatLineID;
+            // Return stats for that game.
+            return await HockeyStatistics.FindAsync(statLineId);
+        }
+
+        /// <summary>
+        /// Takes team id and game id, then gets the specified team's statistics for a single
+        /// game.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="gameId"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> GetSoccerGameStatistic(Guid teamId, Guid gameId)
+        {
+            // Get stat line id
+            Guid statLineId = TeamGames.FirstOrDefaultAsync(x => x.TeamID == teamId && x.GameID == gameId).Result.StatLineID;
+            // Return stats for that game.
+            return await SoccerStatistics.FindAsync(statLineId);
+        }
+
+
+        /*****************************************************************************************/
+
+
         // GetSportStatisticByPlayerId
         /// <summary>
         /// Takes user id and finds all basketball stat lines for that user.

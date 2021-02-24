@@ -15,12 +15,12 @@ namespace StatService
 {
     public class Startup
     {
-
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,8 +37,8 @@ namespace StatService
             
             services.AddDbContext<StatsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LocalDB")));
 
-            var identityUrl = _configuration.GetValue<string>("IdentityUrl");
-            var jwtSettings = _configuration.GetSection("JwtSettings");
+            var identityUrl = Configuration.GetValue<string>("IdentityUrl");
+            var jwtSettings = Configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

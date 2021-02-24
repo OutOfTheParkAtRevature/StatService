@@ -105,18 +105,21 @@ namespace StatService.Controllers
         /// </summary>
         /// <param name="baseballStatistic"></param>
         /// <returns></returns>
-        //[HttpPost]
-        //public async Task<ActionResult<BaseballStatistic>> PostBaseballStatistic(BaseballStatistic baseballStatistic)
-        //{
+        [HttpPost]
+        public async Task<ActionResult<BaseballStatistic>> PostBaseballStatistic(string playerId, Guid gameId, BaseballStatistic baseballStatistic)
+        {
             /*
             _context.BaseballStatistics.Add(baseballStatistic);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetBaseballStatistic", new { id = baseballStatistic.StatLineID }, baseballStatistic);
             */
-            //calle logic CreateStatistic method
-            //return await _logic.CreateStatistic(baseballStatistic);
-        //}
+
+            // call logic CreateStatistic method
+            // input parameters: (string playerId, Guid gameId, BaseballStatistic baseballStatistic)
+            await _logic.CreateStatistic(playerId, gameId, baseballStatistic);
+            return await _logic.GetBaseballGameStatistic(playerId, gameId);
+        }
 
         // DELETE: api/BaseballStatistics/5
         /// DELETE, BaseballStatistics

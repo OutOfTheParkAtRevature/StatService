@@ -256,6 +256,22 @@ namespace Repository.Migrations
 
                     b.ToTable("SoccerStatistics");
                 });
+
+            modelBuilder.Entity("Models.TeamGame", b =>
+                {
+                    b.Property<Guid>("TeamID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GameID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StatLineID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TeamID", "GameID");
+
+                    b.ToTable("TeamGames");
+                });
 #pragma warning restore 612, 618
         }
     }

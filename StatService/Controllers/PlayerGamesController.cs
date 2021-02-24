@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using Models.DataTransfer;
 using Repository;
 using Service;
 
@@ -39,56 +39,49 @@ namespace StatService.Controllers
         }
 
         // GET: api/PlayerGames/5
-        // GetPlayerGame by id
-        /// <summary>
-        /// return the player game that match the id
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("{playerId}/{gameId}")]
-        public async Task<ActionResult<BaseballStatistic>> GetPlayerGame(string playerId, Guid gameId)
+        [HttpGet("{userId}/{gameId}")]
+        public async Task<ActionResult<PlayerGameStatDto>> GetPlayerGame(string userId, Guid gameId)
         {
-            return await _logic.GetBaseballGameStatistic(playerId, gameId);
+            var playerGame = await _context.PlayerGames.FirstOrDefaultAsync(x=>x.UserID == userId && x.GameID == gameId);
+            if (playerGame == null)
+            {
+                return NotFound();
+            }
+            BaseballStatistic bs = await _logic.GetBaseballStatisticById(playerGame.StatLineID);
+            PlayerGameStatDto ps = new PlayerGameStatDto { playerId = userId, gameId = gameId, baseballStat = bs };
+            return ps;
         }
 
-        // PUT: api/PlayerGames/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        // Put PutPlayerGame
-        /// <summary>
-        /// return response status code: success, errors, or redirect
-        /// 
-        /// </summary>
-        /// <param name="id, playerGame"></param>
-        /// <returns></returns>
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayerGame(string id, PlayerGame playerGame)
-        {
-            if (id != playerGame.UserID)
-            {
-                return BadRequest();
-            }
+        //// PUT: api/PlayerGames/5
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutPlayerGame(Guid id, PlayerGame playerGame)
+        //{
+        //    if (id != playerGame.UserID)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(playerGame).State = EntityState.Modified;
+        //    _context.Entry(playerGame).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlayerGameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!PlayerGameExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         // POST: api/PlayerGames
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -100,44 +93,46 @@ namespace StatService.Controllers
         /// <param name="playerGame"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<BaseballStatistic>> PostPlayerGame(string playerId, Guid gameId, BaseballStatistic baseballStatistic)
+        public async Task<ActionResult<PlayerGameStatDto>> PostPlayerGame([FromBody]CreatePlayerGameDto createPlayerGameDto)
         {
-            return await _logic.CreateStatistic(playerId, gameId, baseballStatistic);
+
+            return Ok(await _logic.CreateStatistic(createPlayerGameDto.playerId, createPlayerGameDto.gameId, createPlayerGameDto.BaseballStatistic));
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateException)
+            //{
+            //    if (PlayerGameExists(playerGame.UserID))
+            //    {
+            //        return Conflict();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
         }
 
-        // DELETE: api/PlayerGames/5
-        // 
-        /// <summary>
-        /// return status response: success, errors, or redirect
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlayerGame(string id)
-        {
-            var playerGame = await _context.PlayerGames.FindAsync(id);
-            if (playerGame == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/PlayerGames/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeletePlayerGame(string id)
+        //{
+        //    var playerGame = await _context.PlayerGames.FindAsync(id);
+        //    if (playerGame == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.PlayerGames.Remove(playerGame);
-            await _context.SaveChangesAsync();
+        //    _context.PlayerGames.Remove(playerGame);
+        //    await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
-        
-        // PlayerGameExists
-        /// <summary>
-        /// return boolean value: true or false
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private bool PlayerGameExists(string id)
-        {
-            return _context.PlayerGames.Any(e => e.UserID == id);
-        }
+        //    return NoContent();
+        //}
+
+        //private bool PlayerGameExists(Guid id)
+        //{
+        //    return _context.PlayerGames.Any(e => e.UserID == id);
+        //}
     }
 }

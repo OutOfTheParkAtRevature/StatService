@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -35,8 +34,6 @@ namespace StatService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BaseballStatistic>>> GetBaseballStatistics()
         {
-
-
            // return await _logic.GetBaseballGameStatistic();
             return await _context.BaseballStatistics.ToListAsync();
         }

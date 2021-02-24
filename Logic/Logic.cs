@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Models;
+using Models.DataTransfer;
 using Repository;
 
 
@@ -45,7 +46,7 @@ namespace Service
             await _repo.CommitSave();
         }
 
-        public async Task BuildTeamGame(string teamId, Guid gameId, Guid statLineId)
+        public async Task BuildTeamGame(Guid teamId, Guid gameId, Guid statLineId)
         {
             TeamGame teamGame = new TeamGame()
             {
@@ -76,10 +77,12 @@ namespace Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> CreateStatistic(string playerId, Guid gameId, BaseballStatistic baseballStatistic)
+        public async Task<PlayerGameStatDto> CreateStatistic(string playerId, Guid gameId, BaseballStatistic baseballStatistic)
         {
+            baseballStatistic = await _repo.CreateStatistic(baseballStatistic);
             await BuildPlayerGame(playerId, gameId, baseballStatistic.StatLineID);
-            return await _repo.CreateStatistic(baseballStatistic);
+            PlayerGameStatDto pgs = new PlayerGameStatDto { playerId = playerId, gameId = gameId, baseballStat = baseballStatistic };
+            return pgs;
         }
 
         /// Creates a football statistic for a player. Statistic can be updated with
@@ -370,6 +373,8 @@ namespace Service
                 basketballStatistic.Rebounds += b.Rebounds;
                 basketballStatistic.Steals += b.Steals;
                 basketballStatistic.Turnovers += b.Turnovers;
+                basketballStatistic.ThreePts += b.ThreePts;
+                basketballStatistic.PossessionTime += b.PossessionTime;
             }
             // return total
             return basketballStatistic;

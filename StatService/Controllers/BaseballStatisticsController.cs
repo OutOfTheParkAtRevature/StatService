@@ -121,5 +121,17 @@ namespace StatService.Controllers
             var token = await HttpContext.GetTokenAsync("access_token");
             return Ok(await _logic.GetPlayerOverallBaseballStatistic(id, token));
         }
+        [HttpGet("team")]
+        public async Task<IActionResult> GetAllTeamOverallStats()
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return Ok(await _logic.GetAllTeamOverallStatistics(token));
+        }
+        [HttpGet("team/{id}")]
+        public async Task<IActionResult> GetOverallStatsForTeam(Guid id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            return Ok(await _logic.GetTeamOverallBaseballStatistic(id, token));
+        }
     }
 }

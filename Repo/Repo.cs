@@ -507,6 +507,28 @@ namespace Repository
             return hockeyStatisticList;
         }
 
+        public async Task<IEnumerable<BaseballStatistic>> GetBaseballStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            IEnumerable<TeamGame> teamGameEnumerable = TeamGames.Where(x => x.TeamID == id);
+            // grab stat lines from player games
+            foreach (TeamGame p in teamGameEnumerable)
+            {
+                statLineIdList.Add(p.StatLineID);
+            }
+            // grab basketball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                baseballStatisticList.Add(await BaseballStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return baseballStatisticList;
+        }
+
         /// <summary>
         /// Takes user id and finds all soccer stat lines for that user.
         /// </summary>
@@ -532,6 +554,11 @@ namespace Repository
             }
             // return that list
             return soccerStatisticList;
+        }
+
+        public async Task<List<TeamGame>> GetTeamGames()
+        {
+            return await TeamGames.ToListAsync();
         }
 
 

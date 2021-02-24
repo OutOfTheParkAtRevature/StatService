@@ -40,7 +40,7 @@ namespace StatService.Controllers
 
         // GET: api/BaseballStatistics/1/1
         [HttpGet("{userId}/{gameId}")]
-        public async Task<ActionResult<BaseballStatistic>> GetBaseballGameStatistic(Guid userId, Guid gameId)
+        public async Task<ActionResult<BaseballStatistic>> GetBaseballGameStatistic(string userId, Guid gameId)
         {
             return await _logic.GetBaseballGameStatistic(userId, gameId);
         }

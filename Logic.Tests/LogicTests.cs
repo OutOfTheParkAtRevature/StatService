@@ -58,7 +58,7 @@ namespace Service.Tests
                 Logic l = new Logic(r, new NullLogger<Repo>());
                 var teamStatistic = new TeamGame
                 {
-                    TeamID = "tigers",
+                    TeamID = Guid.NewGuid(),
                     StatLineID = Guid.NewGuid(),
                     GameID = Guid.NewGuid()
                 };
@@ -155,14 +155,14 @@ namespace Service.Tests
                 };
 
                 var sportStastic = await l.CreateStatistic(playerStatistic.UserID, playerStatistic.GameID, baseballStatistics);
-                Assert.Equal(4.7689M, sportStastic.BattingAve);
-                Assert.Equal(17, sportStastic.Runs);
-                Assert.Equal(2.3156M, sportStastic.RBI);
-                Assert.Equal(13, sportStastic.Hits);
-                Assert.Equal(23, sportStastic.Steals);
-                Assert.Equal(3.1114M, sportStastic.ERA);
-                Assert.Equal(32, sportStastic.StrikeOuts);
-                Assert.Equal(25, sportStastic.Saves);
+                Assert.Equal(4.7689M, sportStastic.baseballStat.BattingAve);
+                Assert.Equal(17, sportStastic.baseballStat.Runs);
+                Assert.Equal(2.3156M, sportStastic.baseballStat.RBI);
+                Assert.Equal(13, sportStastic.baseballStat.Hits);
+                Assert.Equal(23, sportStastic.baseballStat.Steals);
+                Assert.Equal(3.1114M, sportStastic.baseballStat.ERA);
+                Assert.Equal(32, sportStastic.baseballStat.StrikeOuts);
+                Assert.Equal(25, sportStastic.baseballStat.Saves);
             }
         }
 
@@ -398,7 +398,7 @@ namespace Service.Tests
                 };
                 var teamStatistic = new TeamGame
                 {
-                    TeamID = "tigers",
+                    TeamID = Guid.NewGuid(),
                     StatLineID = Guid.NewGuid(),
                     GameID = Guid.NewGuid()
                 };

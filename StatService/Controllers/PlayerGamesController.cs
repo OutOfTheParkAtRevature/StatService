@@ -33,7 +33,7 @@ namespace StatService.Controllers
 
         // GET: api/PlayerGames/5
         [HttpGet("{userId}/{gameId}")]
-        public async Task<ActionResult<PlayerGameStatDto>> GetPlayerGame(Guid userId, Guid gameId)
+        public async Task<ActionResult<PlayerGameStatDto>> GetPlayerGame(string userId, Guid gameId)
         {
             var playerGame = await _context.PlayerGames.FirstOrDefaultAsync(x=>x.UserID == userId && x.GameID == gameId);
             if (playerGame == null)
@@ -82,7 +82,7 @@ namespace StatService.Controllers
         public async Task<ActionResult<PlayerGameStatDto>> PostPlayerGame([FromBody]CreatePlayerGameDto createPlayerGameDto)
         {
 
-            return Ok(await _logic.CreateStatistic(createPlayerGameDto.playerId, createPlayerGameDto.gameId, createPlayerGameDto.BaseballStatistic));
+            return Ok(await _logic.CreateStatistic(createPlayerGameDto.playerId, createPlayerGameDto.gameId, createPlayerGameDto.baseballStatistic));
             //try
             //{
             //    await _context.SaveChangesAsync();

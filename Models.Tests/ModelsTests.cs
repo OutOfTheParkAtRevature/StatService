@@ -1,3 +1,4 @@
+using Models.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -190,13 +191,41 @@ namespace Models.Tests {
             {
                 StatLineID = Guid.NewGuid(),
                 GameID = Guid.NewGuid(),
-                TeamID = "tigers"
+                TeamID = Guid.NewGuid()
             };
 
             var results = ValidateModel(game);
             Assert.True(results.Count == 0);
         }
 
+        /// <summary>
+        /// Makes sure CreatePlayerGameDto model works with valid data
+        /// </summary>
+        [Fact]
+        public void ValidateCreatePlayerGameDto()
+        {
+            var baseballStatistics = new BaseballStatistic()
+            {
+                StatLineID = Guid.NewGuid(),
+                BattingAve = 4.7689M,
+                Runs = 17,
+                RBI = 2.3156M,
+                Hits = 13,
+                Steals = 23,
+                ERA = 3.1114M,
+                StrikeOuts = 32,
+                Saves = 25
+            };
 
+            var game = new CreatePlayerGameDto()
+            {
+                playerId = "nick",
+                gameId = Guid.NewGuid(),
+                baseballStatistic = baseballStatistics
+            };
+
+            var results = ValidateModel(game);
+            Assert.True(results.Count == 0);
+        }
     }
 }

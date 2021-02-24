@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Model;
 using Models;
 using Models.DataTransfer;
+using Newtonsoft.Json;
 using Repository;
 
 
@@ -456,11 +461,11 @@ namespace Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<BaseballStatistic> GetPlayerOverallBaseballStatistic(string id)
+        public async Task<PlayerOverallStatDto> GetPlayerOverallBaseballStatistic(string id, string token)
         {
             // create baseball statistic to return
             BaseballStatistic baseballStatistic = new BaseballStatistic();
-
+            PlayerOverallStatDto playerOverallStatDto = new PlayerOverallStatDto();
             // get list of all stats with userId filtering result
             IEnumerable<BaseballStatistic> baseballStatisticEnumerable = await _repo.GetBaseballStatisticByPlayerId(id);
             List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
@@ -484,7 +489,44 @@ namespace Service
             baseballStatistic.ERA /= baseballStatisticList.Count;
 
             // return total
-            return baseballStatistic;
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = await httpClient.GetAsync($"http://20.62.210.88/api/User/{id}");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var user = JsonConvert.DeserializeObject<UserDto>(apiResponse);
+                playerOverallStatDto.Player = user;
+                playerOverallStatDto.overallStats = baseballStatistic;
+            }
+
+            return playerOverallStatDto;
+        }
+
+
+
+        public async Task<List<PlayerOverallStatDto>> GetAllPlayerOverallStatistics(string token)
+        {
+            List<PlayerGame> playerGames = await _repo.GetPlayerGames();
+            HashSet<string> userIds = new HashSet<string>();
+            List<PlayerOverallStatDto> overStats = new List<PlayerOverallStatDto>();
+            foreach(PlayerGame pg in playerGames)
+            {
+                userIds.Add(pg.UserID);
+            }
+            foreach(string id in userIds)
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    var response = await httpClient.GetAsync($"http://20.62.210.88/api/User/{id}");
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var user = JsonConvert.DeserializeObject<UserDto>(apiResponse);
+                    PlayerOverallStatDto pos = await GetPlayerOverallBaseballStatistic(id, token);
+                    overStats.Add(pos);
+                }
+            }
+
+            return overStats;
         }
 
         /// <summary>
@@ -569,6 +611,52 @@ namespace Service
             }
             // return total
             return hockeyStatistic;
+        }
+
+        public async Task<List<PlayerGameStatDto>> GetAllPlayerGameStats(string token)
+        {
+            var playerGame = await _repo.PlayerGames.ToListAsync();
+            List<PlayerGameStatDto> pgs = new List<PlayerGameStatDto>();
+            foreach(PlayerGame pg in playerGame)
+            {
+                BaseballStatistic bs = await GetBaseballStatisticById(pg.StatLineID);
+                PlayerGameStatDto ps = new PlayerGameStatDto { playerId = pg.UserID, gameId = pg.GameID, baseballStat = bs };
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    var response = await httpClient.GetAsync($"http://20.62.210.88/api/User/{pg.UserID}");
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    var user = JsonConvert.DeserializeObject<UserDto>(apiResponse);
+                    ps.Player = user;
+
+                    response = await httpClient.GetAsync($"http://40.88.224.69/api/Game/{pg.GameID}");
+                    apiResponse = await response.Content.ReadAsStringAsync();
+                    var game = JsonConvert.DeserializeObject<Game>(apiResponse);
+                    ps.Game = game;
+                }
+                pgs.Add(ps);
+            }
+            return pgs;
+        }
+        public async Task<PlayerGameStatDto> GetPlayerGameStat(string id, Guid gameId, string token)
+        {
+            var playerGame = await _repo.PlayerGames.FirstOrDefaultAsync(x => x.UserID == id && x.GameID == gameId);
+            BaseballStatistic bs = await GetBaseballStatisticById(playerGame.StatLineID);
+            PlayerGameStatDto ps = new PlayerGameStatDto { playerId = id, gameId = gameId, baseballStat = bs };
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var response = await httpClient.GetAsync($"http://20.62.210.88/api/User/{id}");
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                var user = JsonConvert.DeserializeObject<UserDto>(apiResponse);
+                ps.Player = user;
+
+                response = await httpClient.GetAsync($"http://40.88.224.69/api/Game/{gameId}");
+                apiResponse = await response.Content.ReadAsStringAsync();
+                var game = JsonConvert.DeserializeObject<Game>(apiResponse);
+                ps.Game = game;
+            }
+            return ps;
         }
 
         /// <summary>

@@ -854,5 +854,10 @@ namespace Repository
             SoccerStatistics.Remove(soccerStatistic);
             await CommitSave();
         }
+
+        public async Task<List<PlayerGame>> GetPlayerGames()
+        {
+            return await PlayerGames.ToListAsync();
+        }
     }
 }

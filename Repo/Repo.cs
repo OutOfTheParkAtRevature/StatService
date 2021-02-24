@@ -535,6 +535,173 @@ namespace Repository
         }
 
 
+        /*****************************************************************************************/
+
+
+        // GetSportStatisticByTeamId
+        /// <summary>
+        /// Takes team id and finds all basketball stat lines for that team.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<BasketballStatistic>> GetBasketballStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<BasketballStatistic> basketballStatisticList = new List<BasketballStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            IEnumerable<TeamGame> teamGameEnumerable = TeamGames.Where(x => x.TeamID == id);
+            // grab stat lines from player games
+            foreach (TeamGame t in teamGameEnumerable)
+            {
+                statLineIdList.Add(t.StatLineID);
+            }
+            // grab basketball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                basketballStatisticList.Add(await BasketballStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return basketballStatisticList;
+        }
+
+        /// <summary>
+        /// Takes user id and finds all baseball stat lines for that user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<BaseballStatistic>> GetBaseballStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            List<TeamGame> teamGameEnumerable = await TeamGames.Where(x => x.TeamID == id).ToListAsync();
+            // grab stat lines from player games
+            foreach (TeamGame t in teamGameEnumerable)
+            {
+                statLineIdList.Add(t.StatLineID);
+            }
+            // grab baseball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                baseballStatisticList.Add(await BaseballStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return baseballStatisticList;
+        }
+
+        /// <summary>
+        /// Takes user id and finds all football stat lines for that user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<FootBallStatistic>> GetFootballStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<FootBallStatistic> footballStatisticList = new List<FootBallStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            IEnumerable<TeamGame> teamGameEnumerable = TeamGames.Where(x => x.TeamID == id);
+            // grab stat lines from player games
+            foreach (TeamGame t in teamGameEnumerable)
+            {
+                statLineIdList.Add(t.StatLineID);
+            }
+            // grab basketball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                footballStatisticList.Add(await FootballStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return footballStatisticList;
+        }
+
+        /// <summary>
+        /// Takes user id and finds all golf stat lines for that user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<GolfStatistic>> GetGolfStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<GolfStatistic> golfStatisticList = new List<GolfStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            IEnumerable<TeamGame> teamGameEnumerable = TeamGames.Where(x => x.TeamID == id);
+            // grab stat lines from player games
+            foreach (TeamGame t in teamGameEnumerable)
+            {
+                statLineIdList.Add(t.StatLineID);
+            }
+            // grab basketball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                golfStatisticList.Add(await GolfStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return golfStatisticList;
+        }
+
+        /// <summary>
+        /// Takes user id and finds all hockey stat lines for that user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<HockeyStatistic>> GetHockeyStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<HockeyStatistic> hockeyStatisticList = new List<HockeyStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            IEnumerable<TeamGame> teamGameEnumerable = TeamGames.Where(x => x.TeamID == id);
+            // grab stat lines from player games
+            foreach (TeamGame t in teamGameEnumerable)
+            {
+                statLineIdList.Add(t.StatLineID);
+            }
+            // grab basketball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                hockeyStatisticList.Add(await HockeyStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return hockeyStatisticList;
+        }
+
+        /// <summary>
+        /// Takes user id and finds all soccer stat lines for that user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<SoccerStatistic>> GetSoccerStatisticByTeamId(Guid id)
+        {
+            // some generic setup
+            List<SoccerStatistic> soccerStatisticList = new List<SoccerStatistic>();
+            List<Guid> statLineIdList = new List<Guid>();
+            // get all stat line ids where player id matches
+            IEnumerable<TeamGame> teamGameEnumerable = TeamGames.Where(x => x.TeamID == id);
+            // grab stat lines from player games
+            foreach (TeamGame t in teamGameEnumerable)
+            {
+                statLineIdList.Add(t.StatLineID);
+            }
+            // grab basketball stats using that list
+            foreach (Guid s in statLineIdList)
+            {
+                // add stats where stat line id matches
+                soccerStatisticList.Add(await SoccerStatistics.SingleOrDefaultAsync(x => x.StatLineID == s));
+            }
+            // return that list
+            return soccerStatisticList;
+        }
+
+
         /**********************************************************************************/
 
 

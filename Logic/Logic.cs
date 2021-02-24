@@ -599,6 +599,185 @@ namespace Service
         }
 
 
+        /*****************************************************************************************/
+
+
+        // GetTeamOverallSportStatistic
+        /// <summary>
+        /// Summarizes team statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<BasketballStatistic> GetTeamOverallBasketballStatistic(Guid id)
+        {
+            // create basketball statistic to return
+            BasketballStatistic basketballStatistic = new BasketballStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<BasketballStatistic> basketballStatisticList = await _repo.GetBasketballStatisticByTeamId(id);
+            // add all stats together
+            foreach (BasketballStatistic b in basketballStatisticList)
+            {
+                basketballStatistic.Assists += b.Assists;
+                basketballStatistic.FGoals += b.FGoals;
+                basketballStatistic.Fouls += b.Fouls;
+                basketballStatistic.FThrows += b.FThrows;
+                basketballStatistic.Rebounds += b.Rebounds;
+                basketballStatistic.Steals += b.Steals;
+                basketballStatistic.Turnovers += b.Turnovers;
+                basketballStatistic.ThreePts += b.ThreePts;
+                basketballStatistic.PossessionTime += b.PossessionTime;
+            }
+            // return total
+            return basketballStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes team statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<BaseballStatistic> GetTeamOverallBaseballStatistic(Guid id)
+        {
+            // create baseball statistic to return
+            BaseballStatistic baseballStatistic = new BaseballStatistic();
+
+            // get list of all stats with userId filtering result
+            IEnumerable<BaseballStatistic> baseballStatisticEnumerable = await _repo.GetBaseballStatisticByTeamId(id);
+            List<BaseballStatistic> baseballStatisticList = new List<BaseballStatistic>();
+
+            // add all stats together
+            foreach (BaseballStatistic b in baseballStatisticEnumerable)
+            {
+                baseballStatistic.BattingAve += b.BattingAve;
+                baseballStatistic.ERA += b.ERA;
+                baseballStatistic.Hits += b.Hits;
+                baseballStatistic.RBI += b.RBI;
+                baseballStatistic.Runs += b.Runs;
+                baseballStatistic.Saves += b.Saves;
+                baseballStatistic.Steals += b.Steals;
+                baseballStatistic.StrikeOuts += b.StrikeOuts;
+                baseballStatisticList.Add(b);
+            }
+
+            // correcting averages
+            baseballStatistic.BattingAve /= baseballStatisticList.Count;
+            baseballStatistic.ERA /= baseballStatisticList.Count;
+
+            // return total
+            return baseballStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes team statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FootBallStatistic> GetTeamOverallFootballStatistic(Guid id)
+        {
+            // create football statistic to return
+            FootBallStatistic footballStatistic = new FootBallStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<FootBallStatistic> footballStatisticList = await _repo.GetFootballStatisticByTeamId(id);
+            // add all stats together
+            foreach (FootBallStatistic f in footballStatisticList)
+            {
+                footballStatistic.FirstDownCons += f.FirstDownCons;
+                footballStatistic.Penalties += f.Penalties;
+                footballStatistic.Plays += f.Plays;
+                footballStatistic.PossessionTime += f.PossessionTime;
+                footballStatistic.Sacks += f.Sacks;
+                footballStatistic.Turnovers += f.Turnovers;
+                footballStatistic.YardsRec += f.YardsRec;
+                footballStatistic.YardsRun += f.YardsRun;
+            }
+            // return total
+            return footballStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes team statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<GolfStatistic> GetTeamOverallGolfStatistic(Guid id)
+        {
+            // create golf statistic to return
+            GolfStatistic golfStatistic = new GolfStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<GolfStatistic> golfStatisticList = await _repo.GetGolfStatisticByTeamId(id);
+            // add all stats together
+            foreach (GolfStatistic g in golfStatisticList)
+            {
+                golfStatistic.Birdies += g.Birdies;
+                golfStatistic.Bogeys += g.Bogeys;
+                golfStatistic.DriveAccuracy += g.DriveAccuracy;
+                golfStatistic.DriveDistance += g.DriveDistance;
+                golfStatistic.Eagles += g.Eagles;
+                golfStatistic.GIR += g.GIR;
+                golfStatistic.PutsperGIR += g.PutsperGIR;
+                golfStatistic.SandSaves += g.SandSaves;
+                golfStatistic.ScoreToPar += g.ScoreToPar;
+                golfStatistic.Scrambles += g.Scrambles;
+            }
+            // return total
+            return golfStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes team statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<HockeyStatistic> GetTeamOverallHockeyStatistic(Guid id)
+        {
+            // create hockey statistic to return
+            HockeyStatistic hockeyStatistic = new HockeyStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<HockeyStatistic> hockeyStatisticList = await _repo.GetHockeyStatisticByTeamId(id);
+            // add all stats together
+            foreach (HockeyStatistic h in hockeyStatisticList)
+            {
+                hockeyStatistic.Blocks += h.Blocks;
+                hockeyStatistic.FaceOffWins += h.FaceOffWins;
+                hockeyStatistic.GiveAways += h.GiveAways;
+                hockeyStatistic.Goals += h.Goals;
+                hockeyStatistic.Hits += h.Hits;
+                hockeyStatistic.PenaltyMins += h.PenaltyMins;
+                hockeyStatistic.PowerPlayOpps += h.PowerPlayOpps;
+                hockeyStatistic.Shots += h.Shots;
+                hockeyStatistic.TakeAWays += h.TakeAWays;
+            }
+            // return total
+            return hockeyStatistic;
+        }
+
+        /// <summary>
+        /// Summarizes team statistics from the season.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<SoccerStatistic> GetTeamOverallSoccerStatistic(Guid id)
+        {
+            // create soccer statistic to return
+            SoccerStatistic soccerStatistic = new SoccerStatistic();
+            // get list of all stats with userId filtering result
+            IEnumerable<SoccerStatistic> soccerStatisticList = await _repo.GetSoccerStatisticByTeamId(id);
+            // add all stats together
+            foreach (SoccerStatistic s in soccerStatisticList)
+            {
+                soccerStatistic.CornerKicks += s.CornerKicks;
+                soccerStatistic.Fouls += s.Fouls;
+                soccerStatistic.Goals += s.Goals;
+                soccerStatistic.OffSides += s.OffSides;
+                soccerStatistic.PossessionTime += s.PossessionTime;
+                soccerStatistic.RedCards += s.RedCards;
+                soccerStatistic.ShotOnGoal += s.ShotOnGoal;
+                soccerStatistic.yellowCards += s.yellowCards;
+            }
+            // return total
+            return soccerStatistic;
+        }
+
 
         /*****************************************************************************************/
 

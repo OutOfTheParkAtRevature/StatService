@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-
-using Repository;
 using Models;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace Repository.Tests {
+namespace Repository.Tests
+{
     public class RepoTests {
 
         /// <summary>

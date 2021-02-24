@@ -1,15 +1,5 @@
-using System;
-using System.Net.Http;
-using System.Net.Http.Json;
-using Xunit;
-
-using Repository;
-using Service;
-using Models;
-
-using StatService.Tests.Utils;
-
-namespace StatService.Tests {
+namespace StatService.Tests
+{
     //public class IntegrationTests : IClassFixture<StatFactory<Startup>> {
     //    private StatFactory<Startup> Factory;
     //    public IntegrationTests(StatFactory<Startup> factory) {

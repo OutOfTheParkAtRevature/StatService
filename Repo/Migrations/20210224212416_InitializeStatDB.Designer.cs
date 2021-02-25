@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(StatsContext))]
-    [Migration("20210223173205_m2")]
-    partial class m2
+    [Migration("20210224212416_InitializeStatDB")]
+    partial class InitializeStatDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -210,8 +210,8 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Models.PlayerGame", b =>
                 {
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("GameID")
                         .HasColumnType("uniqueidentifier");

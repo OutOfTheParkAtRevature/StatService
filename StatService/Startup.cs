@@ -37,7 +37,7 @@ namespace StatService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StatService", Version = "v1" });
             });
             
-            services.AddDbContext<StatsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LocalDB")));
+            services.AddDbContext<StatsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDB")));
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
             var jwtSettings = Configuration.GetSection("JwtSettings");

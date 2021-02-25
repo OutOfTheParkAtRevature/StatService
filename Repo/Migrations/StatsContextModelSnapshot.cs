@@ -208,8 +208,8 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Models.PlayerGame", b =>
                 {
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid>("GameID")
                         .HasColumnType("uniqueidentifier");

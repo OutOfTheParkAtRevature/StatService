@@ -162,18 +162,6 @@ namespace Service
         }
 
         /// <summary>
-        /// Creates a baseball statistic for a player. Statistic can be updated with
-        /// UpdateStatistic method.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<BaseballStatistic> CreateTeamStatistic(Guid teamId, Guid gameId, BaseballStatistic baseballStatistic)
-        {
-            await BuildTeamGame(teamId, gameId, baseballStatistic.StatLineID);
-            return await _repo.CreateStatistic(baseballStatistic);
-        }
-
-        /// <summary>
         /// Creates a football statistic for a player. Statistic can be updated with
         /// UpdateStatistic method.
         /// </summary>

@@ -32,7 +32,9 @@ metadata:
 spec:
   ports:
     - name: stat-service
+      protocol: TCP
       port: 80
+      targetPort: 80
   selector:
     app: stat-service
   type: ClusterIP

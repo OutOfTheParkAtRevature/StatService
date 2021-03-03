@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class InitializeStatDB : Migration
+    public partial class statschema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

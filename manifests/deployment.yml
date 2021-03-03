@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: stat-service
-          image: outofthepark15226.azurecr.io/stat-service
+          image: outoftheparkacr.azurecr.io/stat-service
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -36,21 +36,4 @@ spec:
       targetPort: stat-http
   selector:
     app: stat-service
-  type: LoadBalancer
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: stat-service-ingress
-  annotations:
-    kubernetes.io/ingress.class: addon-http-application-routing
-spec:
-  rules:
-  - host: stat-service.1c50b018f5784721b39b.eastus.aksapp.io
-    http:
-      paths:
-      - pathType: Prefix
-        backend:
-          serviceName: stat-service-deployment
-          servicePort: 80
-        path: /stat(/|$)(.*)
+  type: ClusterIP

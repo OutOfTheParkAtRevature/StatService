@@ -10,8 +10,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(StatsContext))]
-    [Migration("20210224212416_InitializeStatDB")]
-    partial class InitializeStatDB
+    [Migration("20210302234501_statschema")]
+    partial class statschema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -33,7 +33,7 @@ metadata:
   namespace: default
 spec:
   ports:
-    - name: stat-service
+    - name: stat-http
       protocol: TCP
       port: 80
       targetPort: 80
